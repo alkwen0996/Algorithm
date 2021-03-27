@@ -1,3 +1,3 @@
 
-# BaekJoon
+# Solve the problem
 
