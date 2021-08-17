@@ -22,6 +22,12 @@ public class No_1110 {
             originalInput = "0"+originalInput;
         }
 
+        count = getCount(stringbuilder, input, originalInput, count);
+        System.out.println(count);
+
+    }
+
+    private static int getCount(StringBuilder stringbuilder, String input, String originalInput, int count) {
         while (!stringbuilder.toString().equals(originalInput.toString())) {
 
             if (stringbuilder.toString().length() != 0) {
@@ -51,7 +57,6 @@ public class No_1110 {
 
             count++;
         }
-        System.out.println(count);
-
+        return count;
     }
 }
