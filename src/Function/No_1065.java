@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 public class No_1065 {
     private static final int TEN = 10;
     private static final int HUNDRED = 100;
-    private static final int THOUSAND = 1000;
 
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
