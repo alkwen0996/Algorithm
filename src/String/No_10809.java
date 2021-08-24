@@ -14,14 +14,11 @@ public class No_10809 {
         String input = bufferedReader.readLine();
 
         char[] inputCharsArray = input.toCharArray();
-
         String result = solve(inputCharsArray);
-
         System.out.println(result);
-
     }
 
-    private static String solve(char [] inputCharsArray) {
+    private static String solve(char[] inputCharsArray) {
         List<Character> inputChars = new ArrayList<>();
 
         for (char c : inputCharsArray) {
@@ -30,11 +27,11 @@ public class No_10809 {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (int i = 0; i < ALPHABET_COUNT; i++){
-            if(!inputChars.contains((char) (97 + i))){
+        for (int i = 0; i < ALPHABET_COUNT; i++) {
+            if (!inputChars.contains((char) (97 + i))) {
                 stringBuilder.append(-1).append(" ");
             }
-            if(inputChars.contains((char) (97 + i))){
+            if (inputChars.contains((char) (97 + i))) {
                 stringBuilder.append(inputChars.indexOf((char) (97 + i))).append(" ");
             }
         }
