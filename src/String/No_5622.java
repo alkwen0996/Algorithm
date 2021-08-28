@@ -11,24 +11,9 @@ public class No_5622 {
 
         int sum = 0;
         for (char c : inputDatas) {
-            if(c<='C'){
-                sum+=3;
-            }else if(c<='F'){
-                sum+=4;
-            }else if(c<='I'){
-                sum+=5;
-            }else if(c<='L'){
-                sum+=6;
-            }else if(c<='O'){
-                sum+=7;
-            }else if(c<='S'){
-                sum+=8;
-            }else if(c<='V'){
-                sum+=9;
-            }else if(c<='Z'){
-                sum+=10;
-            }else{
-                sum+=11;
+            sum+=(int)(c-'A')/3+3;
+            if(c == 'Y' || c == 'V' || c == 'S' || c == 'Z'){
+                sum--;
             }
         }
         System.out.println(sum);
