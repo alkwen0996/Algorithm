@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class No_1316 {
+
+    public static final int ALPHABET_COUNT = 26;
+    public static final char CHAR_A = 'a';
+    public static final int NUMBER_ONE = 1;
+
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         final int countLine = Integer.parseInt(bufferedReader.readLine());
@@ -15,6 +20,7 @@ public class No_1316 {
         for (int i = 0; i < countLine; i++) {
             words.add(bufferedReader.readLine());
         }
+
         int result = solve(words);
         System.out.println(result);
     }
@@ -30,24 +36,16 @@ public class No_1316 {
     }
 
     private static Boolean checkGroupWord(final String str) {
-        final List<Character> containsChar = new ArrayList<>();
-        for (char i = 'a'; i <= 'z'; i++) {
-            if (str.contains(Character.toString(i))) {
-                containsChar.add(i);
-            }
-        }
+        final boolean[] alphabet = new boolean[ALPHABET_COUNT];
+        final char[] chars = str.toCharArray();
 
-        int firstCharLocation = 0, lastCharLocation = 0;
-        for (Character character : containsChar) {
-            firstCharLocation = str.indexOf(character);
-            lastCharLocation = str.lastIndexOf(character);
-            for (int i = firstCharLocation; i <= lastCharLocation; i++) {
-                if (str.charAt(i) != character) {
-                    return false;
-                }
+        for (int i = 0; i < chars.length; i++) {
+            int index = str.charAt(i) - CHAR_A;
+            if (alphabet[index] && chars[i] != chars[i - NUMBER_ONE]) {
+                return false;
             }
+            alphabet[index] = true;
         }
-
         return true;
     }
 }
