@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class No_8 {
-
+public class No_1712 {
+// 재귀함수 이용해서 다시 풀기
     public static final int ZERO = 0;
     public static final int ONE = 1;
     public static final int TWO = 2;
@@ -31,15 +31,13 @@ public class No_8 {
         int variableCost = Integer.parseInt(inputNumbers.get(ONE));
         int notebookCost = Integer.parseInt(inputNumbers.get(TWO));
 
-        if(variableCost > notebookCost){
+        if (variableCost > notebookCost) {
             return -1;
         }
 
-        int count = 1;
-        while(true){
-            if(fixedCost+(variableCost*count) < notebookCost*count){
-                break;
-            }
+        int count = 0;
+//        while (fixedCost + (variableCost * count) >= notebookCost * count) {
+        while (fixedCost / (notebookCost - variableCost) >= count) {
             count++;
         }
         return count;
