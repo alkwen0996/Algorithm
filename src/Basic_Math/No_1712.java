@@ -3,43 +3,29 @@ package Basic_Math;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 
 public class No_1712 {
-// 재귀함수 이용해서 다시 풀기
-    public static final int ZERO = 0;
-    public static final int ONE = 1;
-    public static final int TWO = 2;
-
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-        final List<String> inputNumbers = new ArrayList<>();
+        int count = 1;
 
-        while (stringTokenizer.hasMoreTokens()) {
-            inputNumbers.add(stringTokenizer.nextToken());
-        }
-
-        int result = solve(inputNumbers);
-        System.out.println(result);
+        int fixedCost = bufferedReader.read();
+        int variableCost = bufferedReader.read();
+        int notebookCost = bufferedReader.read();
+        System.out.println(solve(fixedCost, variableCost, notebookCost, count));
     }
 
-    private static int solve(final List<String> inputNumbers) {
-        int fixedCost = Integer.parseInt(inputNumbers.get(ZERO));
-        int variableCost = Integer.parseInt(inputNumbers.get(ONE));
-        int notebookCost = Integer.parseInt(inputNumbers.get(TWO));
-
+    private static int solve(int fixedCost, int variableCost, int notebookCost, int count) {
         if (variableCost > notebookCost) {
             return -1;
         }
-
-        int count = 0;
-//        while (fixedCost + (variableCost * count) >= notebookCost * count) {
-        while (fixedCost / (notebookCost - variableCost) >= count) {
+//      while (fixedCost + (variableCost * count) >= notebookCost * count) {
+        if (fixedCost / (notebookCost - variableCost) > count) {
             count++;
+            return solve(fixedCost, variableCost, notebookCost, count);
+        } else{
+            return count;
         }
-        return count;
+
     }
 }
