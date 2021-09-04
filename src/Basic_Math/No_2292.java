@@ -14,20 +14,13 @@ public class No_2292 {
     }
 
     private static int solve(final int input) {
-        int countRoom = 1;
-
-        if (input == 1) {
-            return countRoom;
-        }
-
         int sum = 1;
         int idx = 1;
         while (sum < input) {
             sum = sum + (6 * idx);
-            countRoom++;
             idx++;
         }
 
-        return countRoom;
+        return idx;
     }
 }
