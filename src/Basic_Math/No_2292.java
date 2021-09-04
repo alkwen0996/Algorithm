@@ -14,15 +14,19 @@ public class No_2292 {
     }
 
     private static int solve(final int input) {
-        int countRoom = 0;
+        int countRoom = 1;
 
-        // 1, 6, 12, 18, 24
-        // 1, 7, 19, 37, 61
         if (input == 1) {
-            countRoom = 1;
+            return countRoom;
         }
 
-
+        int sum = 1;
+        int idx = 1;
+        while (sum < input) {
+            sum = sum + (6 * idx);
+            countRoom++;
+            idx++;
+        }
 
         return countRoom;
     }
