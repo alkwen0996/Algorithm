@@ -10,14 +10,26 @@ public class No_2839 {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int inputNumber = Integer.parseInt(bufferedReader.readLine());
 
-        if (inputNumber == 4 || inputNumber == 7) {
-            System.out.println(-1);
-        }else if (inputNumber % 5 == 0) {
-            System.out.println(inputNumber / 5);
-        }else if ((inputNumber % 5) == 1 || (inputNumber % 5) == 3) {
-            System.out.println((inputNumber / 5) + 1);
-        }else if ((inputNumber % 5) == 2 || (inputNumber % 5) == 4) {
-            System.out.println((inputNumber / 5) + 2);
+        int five = inputNumber / 5;
+        int three = 0;
+        inputNumber %= 5;
+
+        while (five >= 0) {
+            if (inputNumber % 3 == 0) {
+                three = inputNumber / 3;
+                inputNumber %= 3;
+                break;
+            }
+            five--;
+            inputNumber += 5;
         }
+
+        if(inputNumber == 0){
+            System.out.println(five+three);
+        }
+        if(inputNumber != 0){
+            System.out.println(-1);
+        }
+
     }
 }
