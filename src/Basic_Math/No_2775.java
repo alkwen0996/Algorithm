@@ -3,7 +3,6 @@ package Basic_Math;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class No_2775 {
     public static void main(String[] args) throws IOException {
@@ -11,11 +10,10 @@ public class No_2775 {
         final StringBuilder stringBuilder = new StringBuilder();
         int lineCount = Integer.parseInt(bufferedReader.readLine());
 
-        for (int i = 0; i < lineCount; i++){
-            final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(),"\n");
-            int k = Integer.parseInt(stringTokenizer.nextToken());
-            int n = Integer.parseInt(stringTokenizer.nextToken());
-            int result = solve(k,n);
+        for (int i = 0; i < lineCount; i++) {
+            int k = Integer.parseInt(bufferedReader.readLine());
+            int n = Integer.parseInt(bufferedReader.readLine());
+            int result = solve(k, n);
             stringBuilder.append(result).append("\n");
         }
 
@@ -29,7 +27,15 @@ public class No_2775 {
         // k층 n호에 몇명이 사는지 출력.
         // 아파트는 0층부터 있고 1호부터 있다.
         // 0층의 i호에는 i명이 산다.
+        // 각 층 1호 = 1 / 2호 k + 2 /
+        if (k == 0) {
+            return n;
+        }
 
-        return 0;
+        if (n == 0) {
+            return 0;
+        }
+
+        return solve(k - 1, n) + solve(k, n - 1);
     }
 }
