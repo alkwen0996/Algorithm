@@ -19,7 +19,7 @@ public class No_2581 {
     private static String solve(final int m, final int n) {
         final StringBuilder stringBuilder = new StringBuilder();
         final List<Integer> primeNumber = new ArrayList<>();
-        boolean [] checkPrimeNumber = isPrime(n);
+        boolean[] checkPrimeNumber = isPrime(n);
 
         for (int i = m; i < checkPrimeNumber.length; i++) {
             if (checkPrimeNumber[i]) {
@@ -32,7 +32,7 @@ public class No_2581 {
                 .mapToInt(a -> a)
                 .sum();
 
-        if(sum == 0){
+        if (sum == 0) {
             return "-1";
         }
 
@@ -41,17 +41,16 @@ public class No_2581 {
                 .min(Comparator.comparingInt(a -> a))
                 .get();
 
-
-        return stringBuilder.append(min).append("\n").append(sum).toString();
+        return stringBuilder.append(sum).append("\n").append(min).toString();
     }
 
     private static boolean[] isPrime(final int n) {
-        boolean [] checkPrime = new boolean[n + 1];
+        boolean[] checkPrime = new boolean[n + 1];
 
         checkPrime[0] = false;
         checkPrime[1] = false;
 
-        for (int i = 2; i < checkPrime.length; i++){
+        for (int i = 2; i < checkPrime.length; i++) {
             checkPrime[i] = true;
         }
 
