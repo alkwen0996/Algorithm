@@ -16,11 +16,6 @@ public class No_11653 {
     }
 
     private static String solve(final int N) {
-
-        // 1. N의 인수 중 소수인 것들을 구한다.
-        // 2. N을 나누어 나머지가 0인 소수들중 가장 작은수로 나눈다.
-        // 3. 몫이 소수가 나올때까지 2번 작업 반복한다. ( 몫이 1또는 0이면 정지 )
-        // 4. N이 1인경우 아무것도 출력하지 않는다.
         if (N == 1) {
             return "";
         }
@@ -41,8 +36,7 @@ public class No_11653 {
         final StringBuilder stringBuilder = new StringBuilder();
         int index = 0;
         int share = factors.get(0);
-
-        while (!isPrimeFactor(N / share)) {
+        while (!isPrimeFactor(N)) {
             if (N % share != 0) {
                 share = factors.get(index++);
             }
@@ -51,10 +45,7 @@ public class No_11653 {
                 N = N / share;
             }
         }
-        stringBuilder.append(share).append("\n");
-        if (isPrimeFactor(N / share) && !isPrimeFactor(N)) {
-            stringBuilder.append(N / share).append("\n");
-        }
+        stringBuilder.append(N).append("\n");
 
         return stringBuilder.toString();
     }
