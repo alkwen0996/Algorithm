@@ -31,10 +31,11 @@ public class No_9012 {
             if (parenthesis == '(') {
                 checkVPS.push(parenthesis);
             } else if (parenthesis == ')' && !checkVPS.isEmpty()) {
+                // 가독성위해 imEmpty()따로 체크
                 checkVPS.pop();
             } else {
                 return NO;
-            }
+            } // else 조건분기 간략화
         }
 
         if (checkVPS.isEmpty()) {
