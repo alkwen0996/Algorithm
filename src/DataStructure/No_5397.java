@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class No_5397 {
-
     public static final String DASH = "-";
     public static final String LEFT_INEQUALITY_SIGN = "<";
     public static final String RIGHT_INEQUALITY_SIGN = ">";
@@ -19,6 +18,7 @@ public class No_5397 {
         for (int i = 0; i < lineCount; i++) {
             stringBuilder.append(solve(bufferedReader.readLine())).append("\n");
         }
+        System.out.println(stringBuilder.toString());
     }
 
     private static String solve(final String readLine) {
@@ -31,19 +31,16 @@ public class No_5397 {
     }
 
     private static String deleteSign(final String readLine) {
-        final Deque<String> inputPasswords = new ArrayDeque<>();
         char[] inputDataCharters = readLine.toCharArray();
-        final List<String> result = new LinkedList<>();
+        final List<String> inputPassword = new LinkedList<>();
 
-        for (final char inputDataCharter : inputDataCharters) {
-            result.add(String.valueOf(inputDataCharter));
+        for (char inputDataCharter:inputDataCharters) {
+            inputPassword.add(String.valueOf(inputDataCharter));
         }
 
-        for (int i = 0; i < result.size(); i++){
+        for (int i = 0; i < inputPassword.size(); i++){
 
         }
-
-        System.out.println(inputPasswords.toString());
 
         return null;
     }
