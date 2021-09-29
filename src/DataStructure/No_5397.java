@@ -38,9 +38,7 @@ public class No_5397 {
             inputPassword.add(String.valueOf(inputDataCharter));
         }
 
-        for (int i = 0; i < inputPassword.size(); i++){
-
-        }
+//        <<BP<A>>Cd-
 
         return null;
     }
