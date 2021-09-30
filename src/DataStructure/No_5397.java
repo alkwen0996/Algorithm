@@ -32,14 +32,38 @@ public class No_5397 {
 
     private static String deleteSign(final String readLine) {
         char[] inputDataCharters = readLine.toCharArray();
-        final List<String> inputPassword = new LinkedList<>();
+        final Deque<String> inputPassword = new ArrayDeque<>();
+        final List<String> resultPassword = new LinkedList<>();
 
-        for (char inputDataCharter:inputDataCharters) {
-            inputPassword.add(String.valueOf(inputDataCharter));
+        for (char inputDataCharter : inputDataCharters) {
+            inputPassword.addLast(String.valueOf(inputDataCharter));
         }
 
 //        <<BP<A>>Cd-
+        // List는 반복문에서 요소를 삭제하면 전체 리스트 길이가 변하므로 사용하기 애매.
+        // > 왼쪽, 오른쪽 요소 교환 및 화살표 삭제
+        // < 오른쪽, 왼쪽 요소 교환 및 화살표 삭제
+        // - 하나 앞의 요소 삭제
+        System.out.println(inputPassword.toString());
+        final int passwordLength = inputPassword.size();
+        for (int i = 0; i < passwordLength; i++) {
+            String passwordCharacter = inputPassword.pop();
+            System.out.println("추출: "+passwordCharacter);
+            System.out.println("추출2: "+inputPassword.pollLast());
 
+            if(passwordCharacter.equals(DASH)){
+                System.out.println(inputPassword.removeLast());
+            }else if(passwordCharacter.equals(LEFT_INEQUALITY_SIGN)){
+                System.out.println("in left in");
+                System.out.println(inputPassword.pop());
+            }else if(passwordCharacter.equals(RIGHT_INEQUALITY_SIGN)){
+
+            }else{
+                inputPassword.addLast(passwordCharacter);
+            }
+            System.out.println(inputPassword.toString());
+        }
+        System.out.println(inputPassword.toString());
         return null;
     }
 }
