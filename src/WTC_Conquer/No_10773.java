@@ -25,8 +25,8 @@ public class No_10773 {
 
         if (sumNumbers.size() > 0) {
             int result = 0;
-            for (int sumNumber : sumNumbers) {
-                result += sumNumber;
+            while(!sumNumbers.isEmpty()){
+                result += sumNumbers.pop();
             }
             System.out.println(result);
         } else {
