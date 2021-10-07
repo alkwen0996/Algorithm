@@ -23,15 +23,11 @@ public class No_10773 {
             }
         }
 
-        if (sumNumbers.size() > 0) {
-            int result = 0;
-            while(!sumNumbers.isEmpty()){
-                result += sumNumbers.pop();
-            }
-            System.out.println(result);
-        } else {
-            System.out.println(0);
+        int result = 0;
+        while (!sumNumbers.isEmpty()) {
+            result += sumNumbers.pop();
         }
+        System.out.println(result);
 
     }
 }
