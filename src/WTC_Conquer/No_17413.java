@@ -44,25 +44,27 @@ public class No_17413 {
                     System.out.println("LEFTARROW IN");
                     stringBuilder.append(betweenArrowReverseWord(noTags)).append(wordCharacter);
                     tags.push(wordCharacter);
-                }else{
+                } else {
                     System.out.println("tags empty and no left arrow");
                     noTags.push(wordCharacter);
+                }
+
+                if (!noTags.isEmpty() && i == (wordCharacters.length - 1)) {
+                    stringBuilder.append(betweenArrowReverseWord(noTags));
                 }
             } else {
                 if (wordCharacter.equals(RIGHT_ARROW)) {
                     System.out.println("RIGHTARROW IN");
                     stringBuilder.append(wordCharacter);
                     tags.pop();
-                }else{
+                } else {
                     System.out.println("tags empty and no right arrow");
                     stringBuilder.append(wordCharacter);
                 }
             }
-            System.out.println("noTags: "+noTags.toString());
-            System.out.println("stringBuilder: "+stringBuilder.toString());
+            System.out.println("noTags: " + noTags.toString());
+            System.out.println("stringBuilder: " + stringBuilder.toString());
         }
-
-
 
         return stringBuilder.toString();
     }
@@ -70,9 +72,15 @@ public class No_17413 {
     private static String betweenArrowReverseWord(final Deque<String> reverseWordCharacters) {
         System.out.println("betweenArrowReverseWord in");
         final StringBuilder stringBuilder = new StringBuilder();
-        while (!reverseWordCharacters.isEmpty()) {
-            stringBuilder.append(reverseWordCharacters.pop());
+
+        if(reverseWordCharacters.contains(" ")){
+            // 넘어오는 매개변수를 디큐로 넘길게 아니라 스트링으로 넘겨서 공백있으면 분리해서 문자열 뒤집을 수 있게 처리할 것.
+        }else{
+            while (!reverseWordCharacters.isEmpty()) {
+                stringBuilder.append(reverseWordCharacters.pop());
+            }
         }
+
         return stringBuilder.toString();
     }
 
