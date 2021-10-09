@@ -6,11 +6,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.StringTokenizer;
-
+// 틀림.
 public class No_17413 {
     public static final String LEFT_ARROW = "<";
     public static final String RIGHT_ARROW = ">";
-    public static final int ZERO = 0;
+    public static final String BLANK = " ";
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -18,11 +18,11 @@ public class No_17413 {
         final StringBuilder stringBuilder = new StringBuilder();
 
         if (words.contains(LEFT_ARROW) || words.contains(RIGHT_ARROW)) {
-            stringBuilder.append(reverseWordsArrow(words)).append(" ");
+            stringBuilder.append(reverseWordsArrow(words)).append(BLANK);
         } else {
             final StringTokenizer stringTokenizer = new StringTokenizer(words);
             while (stringTokenizer.hasMoreTokens()) {
-                stringBuilder.append(reverseWordsNoArrow(stringTokenizer.nextToken())).append(" ");
+                stringBuilder.append(reverseWordsNoArrow(stringTokenizer.nextToken())).append(BLANK);
             }
         }
 
@@ -30,9 +30,7 @@ public class No_17413 {
     }
 
     private static String reverseWordsArrow(final String words) {
-        System.out.println("reverseWordsArrow in");
         final char[] wordCharacters = words.toCharArray();
-        final Deque<String> reverseWordCharacters = new ArrayDeque<>();
         final Deque<String> tags = new ArrayDeque<>();
         final Deque<String> noTags = new ArrayDeque<>();
         final StringBuilder stringBuilder = new StringBuilder();
@@ -41,11 +39,9 @@ public class No_17413 {
             String wordCharacter = String.valueOf(wordCharacters[i]);
             if (tags.isEmpty()) { // tag에 화살표가 없을때는 뒤집어야하는 일반 문자 -> 오른쪽 화살표가 나오면 뒤집어서 입력
                 if (wordCharacter.equals(LEFT_ARROW)) {
-                    System.out.println("LEFTARROW IN");
                     stringBuilder.append(betweenArrowReverseWord(noTags)).append(wordCharacter);
                     tags.push(wordCharacter);
                 } else {
-                    System.out.println("tags empty and no left arrow");
                     noTags.push(wordCharacter);
                 }
 
@@ -54,30 +50,40 @@ public class No_17413 {
                 }
             } else {
                 if (wordCharacter.equals(RIGHT_ARROW)) {
-                    System.out.println("RIGHTARROW IN");
                     stringBuilder.append(wordCharacter);
                     tags.pop();
                 } else {
-                    System.out.println("tags empty and no right arrow");
                     stringBuilder.append(wordCharacter);
                 }
             }
-            System.out.println("noTags: " + noTags.toString());
-            System.out.println("stringBuilder: " + stringBuilder.toString());
         }
 
         return stringBuilder.toString();
     }
 
-    private static String betweenArrowReverseWord(final Deque<String> reverseWordCharacters) {
-        System.out.println("betweenArrowReverseWord in");
+    private static String betweenArrowReverseWord(final Deque<String> noTags) {
         final StringBuilder stringBuilder = new StringBuilder();
 
-        if(reverseWordCharacters.contains(" ")){
-            // 넘어오는 매개변수를 디큐로 넘길게 아니라 스트링으로 넘겨서 공백있으면 분리해서 문자열 뒤집을 수 있게 처리할 것.
-        }else{
-            while (!reverseWordCharacters.isEmpty()) {
-                stringBuilder.append(reverseWordCharacters.pop());
+        if (noTags.contains(" ")) {
+            while (!noTags.isEmpty()) {
+                stringBuilder.append(noTags.removeLast());
+            }
+            final StringTokenizer stringTokenizer = new StringTokenizer(stringBuilder.toString());
+            stringBuilder.delete(0, stringBuilder.length());
+
+            int idx = 0;
+            while (stringTokenizer.hasMoreTokens()) {
+
+                if (stringTokenizer.countTokens() > idx) {
+                    stringBuilder.append(reverseWordsNoArrow(stringTokenizer.nextToken())).append(BLANK);
+                } else {
+                    stringBuilder.append(reverseWordsNoArrow(stringTokenizer.nextToken()));
+                }
+                idx++;
+            }
+        } else {
+            while (!noTags.isEmpty()) {
+                stringBuilder.append(noTags.pop());
             }
         }
 
