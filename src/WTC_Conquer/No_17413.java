@@ -29,34 +29,32 @@ public class No_17413 {
         for (int i = 0; i < wordsLength; i++) {
             String wordCharacter = String.valueOf(wordsCharacters[i]);
             if (wordCharacter.equals(LEFT_ARROW)) {
-                while (!reverseWord.isEmpty()) {
-                    stringBuilder.append(reverseWord.pop());
-                }
+                stringBuilder.append(extractReverseWord(reverseWord));
                 stringBuilder.append(wordCharacter);
                 arrowCheck = true;
             } else if (wordCharacter.equals(RIGHT_ARROW)) {
                 arrowCheck = false;
                 stringBuilder.append(wordCharacter);
-            } else if (arrowCheck) {
+            } else if (wordCharacter.equals(BLANK)) {
+                stringBuilder.append(extractReverseWord(reverseWord));
                 stringBuilder.append(wordCharacter);
             } else {
-                if (wordCharacter.equals(BLANK)) {
-                    while (!reverseWord.isEmpty()) {
-                        stringBuilder.append(reverseWord.pop());
-                    }
+                if (arrowCheck) {
                     stringBuilder.append(wordCharacter);
                 } else {
                     reverseWord.push(wordCharacter);
                 }
             }
-
-            if (wordsLength - 1 == i) {
-                while (!reverseWord.isEmpty()) {
-                    stringBuilder.append(reverseWord.pop());
-                }
-            }
         }
+        stringBuilder.append(extractReverseWord(reverseWord));
+        return stringBuilder.toString();
+    }
 
+    private static String extractReverseWord(final Deque<String> reverseWord) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        while (!reverseWord.isEmpty()) {
+            stringBuilder.append(reverseWord.pop());
+        }
         return stringBuilder.toString();
     }
 }
