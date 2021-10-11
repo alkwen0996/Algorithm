@@ -7,9 +7,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class No_17413 {
-    private static final String LEFT_ARROW = "<";
-    private static final String RIGHT_ARROW = ">";
-    private static final String BLANK = " ";
+    private static final Character LEFT_ARROW = '<';
+    private static final Character RIGHT_ARROW = '>';
+    private static final Character BLANK = ' ';
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -22,12 +22,12 @@ public class No_17413 {
     private static String solve(final String words) {
         char[] wordsCharacters = words.toCharArray();
         final StringBuilder stringBuilder = new StringBuilder();
-        final Deque<String> reverseWord = new ArrayDeque<>();
+        final Deque<Character> reverseWord = new ArrayDeque<>();
 
         boolean arrowCheck = false;
         int wordsLength = wordsCharacters.length;
         for (int i = 0; i < wordsLength; i++) {
-            String wordCharacter = String.valueOf(wordsCharacters[i]);
+            Character wordCharacter = wordsCharacters[i];
             if (wordCharacter.equals(LEFT_ARROW)) {
                 stringBuilder.append(extractReverseWord(reverseWord));
                 stringBuilder.append(wordCharacter);
@@ -50,7 +50,7 @@ public class No_17413 {
         return stringBuilder.toString();
     }
 
-    private static String extractReverseWord(final Deque<String> reverseWord) {
+    private static String extractReverseWord(final Deque<Character> reverseWord) {
         final StringBuilder stringBuilder = new StringBuilder();
         while (!reverseWord.isEmpty()) {
             stringBuilder.append(reverseWord.pop());
