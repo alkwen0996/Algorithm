@@ -24,8 +24,8 @@ public class No_2475 {
     private static int solve(final List<Integer> numbers) {
 
         int verificationNumber = 0;
-        for (int i = 0; i < numbers.size(); i++) {
-            verificationNumber = numbers.get(i) * numbers.get(i) + verificationNumber;
+        for (Integer number : numbers) {
+            verificationNumber = number * number + verificationNumber;
         }
 
         return verificationNumber % 10;
