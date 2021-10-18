@@ -23,7 +23,17 @@ public class No_1181 {
     private static void solve(final List<String> noDuplicateWords) {
         final StringBuilder stringBuilder = new StringBuilder();
 
-        Collections.sort(noDuplicateWords, new Comparator<String>() {
+        noDuplicateWords.sort((previousWord, nextWord) -> {
+            if (previousWord.length() > nextWord.length()) {
+                return 1;
+            } else if (previousWord.length() < nextWord.length()) {
+                return -1;
+            } else {
+                return previousWord.compareTo(nextWord);
+            }
+        });
+
+        /*Collections.sort(noDuplicateWords, new Comparator<String>() {
             @Override
             public int compare(final String previousWord, final String nextWord) {
                 if (previousWord.length() > nextWord.length()) {
@@ -34,7 +44,7 @@ public class No_1181 {
                     return previousWord.compareTo(nextWord);
                 }
             }
-        });
+        });*/
 
 
         for (String noDuplicateWord : noDuplicateWords) {
