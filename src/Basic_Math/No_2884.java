@@ -10,8 +10,8 @@ public class No_2884 {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        int H = Integer.parseInt(stringTokenizer.nextToken());
-        int M = Integer.parseInt(stringTokenizer.nextToken());
+        final int H = Integer.parseInt(stringTokenizer.nextToken());
+        final int M = Integer.parseInt(stringTokenizer.nextToken());
 
         solve(H, M);
     }
