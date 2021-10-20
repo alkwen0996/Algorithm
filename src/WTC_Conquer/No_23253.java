@@ -15,32 +15,28 @@ public class No_23253 {
         final int N = Integer.parseInt(stringTokenizer.nextToken());
         final int M = Integer.parseInt(stringTokenizer.nextToken());
 
-        boolean checkOrder = true;
         String result = "Yes";
-        for (int i = 0; i < (2 * M); i++) {
+
+        for (int i = 0; i < M; i++) {
             final Deque<Integer> books = new ArrayDeque<>();
+
+            int k = Integer.parseInt(bufferedReader.readLine());
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-            if (stringTokenizer.countTokens() == 1) {
-                continue;
-            }
-
-            while (stringTokenizer.hasMoreTokens()) {
+            while (k-- > 0) {
                 books.add(Integer.parseInt(stringTokenizer.nextToken()));
             }
 
-            checkOrder = booksOrderCheck(books);
-            if (!checkOrder) {
+            if (!booksOrderCheck(books)) {
                 result = "No";
+                break;
             }
         }
 
         System.out.println(result);
-
     }
 
     private static boolean booksOrderCheck(final Deque<Integer> books) {
-
         int bookNumber = books.pop();
         while (!books.isEmpty()) {
             int nextBooksNumber = books.pop();
