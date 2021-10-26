@@ -22,7 +22,6 @@ public class No_10825 {
 
     private static String solve(final List<Student> scoreSort) {
         final StringBuilder stringBuilder = new StringBuilder();
-
         Collections.sort(scoreSort);
 
         for (Student student : scoreSort) {
