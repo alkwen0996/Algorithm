@@ -23,27 +23,7 @@ public class No_10825 {
     private static String solve(final List<Student> scoreSort) {
         final StringBuilder stringBuilder = new StringBuilder();
 
-        scoreSort.sort((student1, student2) -> {
-            if (student1.korean > student2.korean) {
-                return -1;
-            } else if (student1.korean < student2.korean) {
-                return 1;
-            } else {
-                if (student1.english > student2.english) {
-                    return 1;
-                } else if (student1.english < (student2).english) {
-                    return -1;
-                } else {
-                    if (student1.math > student2.math) {
-                        return -1;
-                    } else if (student1.math < (student2).math) {
-                        return 1;
-                    } else {
-                        return student1.name.compareTo(student2.name);
-                    }
-                }
-            }
-        });
+        Collections.sort(scoreSort);
 
         for (Student student : scoreSort) {
             stringBuilder.append(student.name).append("\n");
@@ -52,7 +32,7 @@ public class No_10825 {
         return stringBuilder.toString();
     }
 
-    private static class Student {
+    private static class Student implements Comparable<Student> {
         private String name;
         private int korean;
         private int english;
@@ -64,5 +44,30 @@ public class No_10825 {
             this.english = english;
             this.math = math;
         }
+
+        @Override
+        public int compareTo(final Student student1) {
+            if (korean > student1.korean) {
+                return -1;
+            } else if (korean < student1.korean) {
+                return 1;
+            } else {
+                if (english > student1.english) {
+                    return 1;
+                } else if (english < student1.english) {
+                    return -1;
+                } else {
+                    if (math > student1.math) {
+                        return -1;
+                    } else if (math < student1.math) {
+                        return 1;
+                    } else {
+                        return name.compareTo(student1.name);
+                    }
+                }
+            }
+        }
+
     }
 }
+
