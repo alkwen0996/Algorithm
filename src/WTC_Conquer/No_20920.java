@@ -17,13 +17,8 @@ public class No_20920 {
 
         while (N-- > 0) {
             String input = bufferedReader.readLine();
-
             if (input.length() >= M) {
-                if (words.containsKey(input)) {
-                    words.put(input, words.get(input) + 1);
-                } else {
-                    words.put(input, 0);
-                }
+                words.merge(input, 1, Integer::sum);
             }
         }
 
@@ -33,47 +28,32 @@ public class No_20920 {
 
     private static String solve(final Map<String, Integer> words) {
         final StringBuilder stringBuilder = new StringBuilder();
-        final List<Word> vocabulary = new ArrayList<>();
+        final Queue<Word> vocabulary = new PriorityQueue<>(Comparator.<Word>comparingInt(w -> -w.frequency)
+                .thenComparingInt(Word::compareLength)
+                .thenComparing(w -> w.letters));
 
-        for (final String key : words.keySet()) {
-            vocabulary.add(new Word(words.get(key), key.length(), key));
+        for (Map.Entry<String, Integer> word : words.entrySet()) {
+            vocabulary.add(new Word(word.getKey(), word.getValue()));
         }
 
-        Collections.sort(vocabulary);
-        for (Word word : vocabulary) {
-            stringBuilder.append(word.letters).append("\n");
+        while (!vocabulary.isEmpty()) {
+            stringBuilder.append(vocabulary.poll().letters).append("\n");
         }
 
         return stringBuilder.toString();
     }
 
-    private static class Word implements Comparable<Word> {
-        private int count;
-        private int length;
+    private static class Word {
         private String letters;
+        private int frequency;
 
-        public Word(final int count, final int length, final String letters) {
-            this.count = count;
-            this.length = length;
+        public Word(final String letters, final int frequency) {
             this.letters = letters;
+            this.frequency = frequency;
         }
 
-        @Override
-        public int compareTo(final Word word) {
-            if (count > word.count) {
-                return -1;
-            } else if (count < word.count) {
-                return 1;
-            } else {
-                if (length > word.length) {
-                    return -1;
-                } else if (length < word.length) {
-                    return 1;
-                } else {
-                    return letters.compareTo(word.letters);
-                }
-            }
-
+        public int compareLength() {
+            return -this.letters.length();
         }
     }
 
