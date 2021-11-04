@@ -10,14 +10,11 @@ public class No_18258 {
     public static final String ORDER_PUSH = "push";
     public static final String ORDER_FRONT = "front";
     public static final String NEW_LINE = "\n";
-    public static final String EMPTY_EXCEPTION = "-1";
     public static final String ORDER_BACK = "back";
     public static final String ORDER_EMPTY = "empty";
     public static final String ORDER_SIZE = "size";
-    public static final int NO_EMPTY_SIGNAL = 0;
-    public static final int EMPTY_SIGNAL = 1;
     public static final String ORDER_POP = "pop";
-
+    public static final Deque<Integer> orderNumbers = new ArrayDeque<>();
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -39,46 +36,80 @@ public class No_18258 {
 
     private static String solve(final List<Order> orders) {
         final StringBuilder stringBuilder = new StringBuilder();
-        final Deque<Integer> orderNumbers = new ArrayDeque<>();
 
         for (Order value : orders) {
             String order = value.order;
             int orderNumber = value.number;
 
             if (order.contains(ORDER_PUSH) && orderNumber > 0) {
-                orderNumbers.add(orderNumber);
+                push(orderNumber);
             } else if (order.contains(ORDER_FRONT)) {
-                if (!orderNumbers.isEmpty()) {
-                    stringBuilder.append(orderNumbers.getFirst()).append(NEW_LINE);
-                } else {
-                    stringBuilder.append(EMPTY_EXCEPTION).append(NEW_LINE);
-                }
+                stringBuilder.append(front()).append(NEW_LINE);
             } else if (order.contains(ORDER_BACK)) {
-                if (!orderNumbers.isEmpty()) {
-                    stringBuilder.append(orderNumbers.getLast()).append(NEW_LINE);
-                } else {
-                    stringBuilder.append(EMPTY_EXCEPTION).append(NEW_LINE);
-                }
+                stringBuilder.append(back()).append(NEW_LINE);
             } else if (order.contains(ORDER_SIZE)) {
-                stringBuilder.append(orderNumbers.size()).append(NEW_LINE);
+                stringBuilder.append(size()).append(NEW_LINE);
             } else if (order.contains(ORDER_EMPTY)) {
-                if (!orderNumbers.isEmpty()) {
-                    stringBuilder.append(NO_EMPTY_SIGNAL).append(NEW_LINE);
-                } else {
-                    stringBuilder.append(EMPTY_SIGNAL).append(NEW_LINE);
-                }
+                stringBuilder.append(empty()).append(NEW_LINE);
             } else if (order.contains(ORDER_POP)) {
-                if (!orderNumbers.isEmpty()) {
-                    stringBuilder.append(orderNumbers.pollFirst()).append(NEW_LINE);
-                } else {
-                    stringBuilder.append(EMPTY_EXCEPTION).append(NEW_LINE);
-                }
+                stringBuilder.append(pop()).append(NEW_LINE);
             }
-
         }
 
         return stringBuilder.toString();
     }
+
+    private static int size() {
+        return orderNumbers.size();
+    }
+
+    private static int back() {
+        int result = 0;
+        if (empty() == 1) {
+            result = -1;
+        } else {
+            result = orderNumbers.getLast();
+        }
+
+        return result;
+    }
+
+    private static int front() {
+        int result = 0;
+        if (empty() == 1) {
+            result = -1;
+        } else {
+            result = orderNumbers.getFirst();
+        }
+
+        return result;
+    }
+
+    public static void push(final int orderNumber) {
+        if (orderNumber > 0) {
+            orderNumbers.add(orderNumber);
+        }
+    }
+
+    public static int pop() {
+        int result = 0;
+        if (!orderNumbers.isEmpty()) {
+            result = orderNumbers.pollFirst();
+        } else {
+            result = -1;
+        }
+
+        return result;
+    }
+
+    public static int empty() {
+        int result = 0;
+        if (orderNumbers.isEmpty()) {
+            result = 1;
+        }
+        return result;
+    }
+
 
     private static class Order {
         private String order;
@@ -88,5 +119,6 @@ public class No_18258 {
             this.order = order;
             this.number = number;
         }
+
     }
 }
