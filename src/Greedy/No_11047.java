@@ -27,11 +27,9 @@ public class No_11047 {
         int minimumCoinCount = 0;
 
         int money = k;
-        int share = 1;
         for (int i = coins.size() - 1; i >= 0; i--) {
-            share = money / coins.get(i);
-            if (share > 0) {
-                minimumCoinCount += share;
+            if (coins.get(i) <= money) {
+                minimumCoinCount += (money / coins.get(i));
                 money = k % coins.get(i);
             }
         }
