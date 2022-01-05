@@ -27,8 +27,8 @@ public class No_1157 {
                 .get();
 
         int  count = 0;
-        for (int i = 0; i < counts.size(); i++){
-            if(maxCountAlphabet.counts.equals(counts.get(i).counts)){
+        for (CountAlphabet countAlphabet : counts) {
+            if (maxCountAlphabet.counts.equals(countAlphabet.counts)) {
                 count++;
             }
         }

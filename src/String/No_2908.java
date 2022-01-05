@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 public class No_2908 {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
         List<Integer> numbers = new ArrayList<>();
         while (stringTokenizer.hasMoreTokens()){
@@ -19,7 +19,7 @@ public class No_2908 {
             numbers.add(Integer.parseInt(stringBuffer.reverse().toString()));
         }
 
-        int bigNumber = numbers.stream()
+        final int bigNumber = numbers.stream()
                 .max(Comparator.comparingInt(it -> it))
                 .get();
 

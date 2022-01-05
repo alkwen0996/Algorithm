@@ -58,12 +58,13 @@ public class No_2947 {
 
     private static String changeOrder() {
         final StringBuilder stringBuilder = new StringBuilder();
+        
         for (int i = 1; i < numbersOrder.size(); i++) {
-            int max = numbersOrder.get(i - 1);
+            int compareNumber = numbersOrder.get(i - 1);
 
-            if (max > numbersOrder.get(i)) {
+            if (compareNumber > numbersOrder.get(i)) {
                 numbersOrder.set(i - 1, numbersOrder.get(i));
-                numbersOrder.set(i, max);
+                numbersOrder.set(i, compareNumber);
                 stringBuilder.append(saveOrder());
             }
         }

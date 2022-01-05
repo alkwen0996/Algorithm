@@ -1,4 +1,4 @@
-package Breadth_First_Search;
+package BFS_DFS;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,9 +23,9 @@ public class No_2606 {
 
         for (int i = 0; i < connectPairCount; i++) {
             final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-            int num1 = Integer.parseInt(stringTokenizer.nextToken());
-            int num2 = Integer.parseInt(stringTokenizer.nextToken());
-            connectComputerRelation[num1][num2] = connectComputerRelation[num2][num1] = 1;
+            int peek1 = Integer.parseInt(stringTokenizer.nextToken());
+            int peek2 = Integer.parseInt(stringTokenizer.nextToken());
+            connectComputerRelation[peek1][peek2] = connectComputerRelation[peek2][peek1] = 1;
         }
 
         int result = solution();

@@ -8,7 +8,7 @@ import java.util.*;
 public class No_19817 {
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        final Queue<Company> wages = new PriorityQueue<>();
+        final Queue<Company> wages = new PriorityQueue<>(Comparator.comparingLong((Company company) -> -company.highestWage));
 
         final int companyNumber = Integer.parseInt(bufferedReader.readLine());
 
@@ -39,7 +39,7 @@ public class No_19817 {
         System.out.println(sum);
     }
 
-    private static class Company implements Comparable<Company> {
+    private static class Company {
         private final int employees;
         private final int highestWage;
 
@@ -47,16 +47,5 @@ public class No_19817 {
             this.employees = employees;
             this.highestWage = highestWage;
         }
-
-        @Override
-        public int compareTo(final Company company) {
-            if (this.highestWage > company.highestWage) {
-                return -1;
-            } else if (this.highestWage < company.highestWage) {
-                return 1;
-            }
-            return 0;
-        }
-
     }
 }

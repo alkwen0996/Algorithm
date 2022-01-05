@@ -21,7 +21,9 @@ public class No_2562 {
     }
 
     private static Number findMaximum(List<Number> inputNumbers) {
-        return inputNumbers.stream().max(Comparator.comparing(a -> a.number)).get();
+        return inputNumbers.stream()
+                .max(Comparator.comparing(a -> a.number))
+                .get();
     }
 
     private static class Number {

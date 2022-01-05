@@ -16,7 +16,7 @@ public class No_1546 {
         int countSubjects = Integer.parseInt(bufferedReader.readLine());
         Double[] scores = new Double[countSubjects];
 
-        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine(), " ");
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
         for (int i = 0; i < countSubjects; i++) {
             scores[i] = Double.parseDouble(stringTokenizer.nextToken());

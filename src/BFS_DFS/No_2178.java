@@ -1,4 +1,4 @@
-package Breadth_First_Search;
+package BFS_DFS;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class No_2178 {
     private static int[][] maze;
-    private static boolean[] visited;
+    private static boolean[] checkVisited;
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -19,7 +19,7 @@ public class No_2178 {
         final int columnSize = Integer.parseInt(stringTokenizer.nextToken());
 
         maze = new int[rowSize + 1][columnSize + 1];
-        visited = new boolean[101];
+        checkVisited = new boolean[101];
 
         for (int i = 0; i < rowSize; i++) {
             String inputLine = bufferedReader.readLine();
@@ -43,14 +43,14 @@ public class No_2178 {
         final Queue<Integer> areas = new LinkedList<>();
 
         areas.add(startPoint);
-        visited[1] = true;
+        checkVisited[1] = true;
 
         while (!areas.isEmpty()) {
             int visitedArea = areas.poll();
             for (int i = 1; i < maze.length; i++) {
-                if (maze[visitedArea][i] == 1 && !visited[i]) {
+                if (maze[visitedArea][i] == 1 && !checkVisited[i]) {
                     areas.add(i);
-                    visited[i] = true;
+                    checkVisited[i] = true;
                     visitedAreaCount++;
                 }
             }

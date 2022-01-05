@@ -4,40 +4,43 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public class No_4344 {
+    public static final int ONE_HUNDRED = 100;
+
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
         int lineCount = Integer.parseInt(bufferedReader.readLine());
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < lineCount; i++) {
             StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
             int numberOfPeople = Integer.parseInt(stringTokenizer.nextToken());
 
-            ArrayList<Double> averageList = new ArrayList<>(numberOfPeople);
+            List<Double> inputScore = new ArrayList<>(numberOfPeople);
             while (stringTokenizer.hasMoreTokens()) {
-                averageList.add(Double.parseDouble(stringTokenizer.nextToken()));
+                inputScore.add(Double.parseDouble(stringTokenizer.nextToken()));
             }
 
-            Double result = averageScores(averageList, numberOfPeople);
-            System.out.println(String.format("%.3f",result) + "%");
+            Double result = solve(inputScore, numberOfPeople);
+            stringBuilder.append(String.format("%.3f", result)).append("%").append("\n");
         }
+        System.out.println(stringBuilder);
     }
 
-    private static Double averageScores(ArrayList<Double> averageList, int numberOfPeople) {
-        Double averageScore = averageList.stream()
+    private static Double solve(List<Double> inputScore, int numberOfPeople) {
+        Double averageScore = inputScore.stream()
                 .collect(Collectors.averagingDouble(it -> it));
 
-        int count = 0;
-        for (Double aDouble : averageList) {
-            if (aDouble > averageScore) {
-                count++;
-            }
-        }
-        return (((double)count / (double) numberOfPeople)*100);
+        long count = inputScore.stream()
+                .filter(average -> averageScore < average)
+                .count();
+
+        return (((double) count / numberOfPeople) * ONE_HUNDRED);
     }
 }

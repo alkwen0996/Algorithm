@@ -3,38 +3,41 @@ package WTC_Conquer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 // 이산수학과제
 public class NO_14723 {
+    public static final String SPACE = " ";
+
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(bufferedReader.readLine());
+        final int N = Integer.parseInt(bufferedReader.readLine());
 
-        solve(N);
+        System.out.println(solve(N));
     }
 
-    private static void solve(final int n) {
-        int a = 0;
-        int b = 0;
-        int index = 0;
+    private static String solve(final int n) {
+        final StringBuilder stringBuilder = new StringBuilder();
 
-        while (index != n) {
-            if (a == 0 && b == 0) {
-                a++;
-                b++;
-            } else {
-                if (a == 1 && b == 1) {
-                    a++;
-                } else if (a == 1 && b > 1) {
-                    a = b + 1;
-                    b = 1;
-                } else {
-                    a--;
-                    b++;
-                }
-            }
+        int start = 1;
+        if (n == start) {
+            return stringBuilder.append(1).append(SPACE).append(1).toString();
+        }
+
+        int index = 2;
+        while (start < n) {
+            start += index;
             index++;
         }
 
-        System.out.println(a + " " + b);
+        int b = index - 1;
+        int a = 1;
+
+        while (start != n) {
+            start--;
+            a++;
+            b--;
+        }
+
+        return stringBuilder.append(a).append(SPACE).append(b).toString();
     }
 }

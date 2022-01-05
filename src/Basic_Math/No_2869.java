@@ -21,7 +21,7 @@ public class No_2869 {
     private static int solve(final int a, final int b, final int v) {
         int dayCount = (v - b) / (a - b);
 
-        if((v - b) % (a - b) != 0){
+        if ((v - b) % (a - b) != 0) {
             dayCount++;
         }
 

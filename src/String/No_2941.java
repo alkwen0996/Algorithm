@@ -23,13 +23,13 @@ public class No_2941 {
                 newInputData = newInputData.replaceAll(str, "1");
             }
         }
-        char [] inputDataChars = newInputData.toCharArray();
+        char[] inputDataChars = newInputData.toCharArray();
         for (final char inputDataChar : inputDataChars) {
             if (inputDataChar == '1') {
                 count++;
             }
         }
-        newInputData = newInputData.replace("1","");
+        newInputData = newInputData.replace("1", "");
         count += newInputData.length();
 
         return count;

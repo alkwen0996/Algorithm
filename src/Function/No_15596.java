@@ -9,12 +9,14 @@ public class No_15596 {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int arrayLength = Integer.parseInt(bufferedReader.readLine());
-        int [] a = new int[arrayLength];
+        int[] a = new int[arrayLength];
         long sum = sum(a);
         System.out.println(sum);
     }
 
     private static long sum(int[] a) {
-        return Arrays.stream(a).sum();
+        return Arrays.stream(a)
+                .mapToObj(Long::valueOf)
+                .reduce(0L,Long::sum);
     }
 }

@@ -1,4 +1,4 @@
-package Bruth_Force;
+package Brute_Force;
 
 import java.io.BufferedReader;
 import java.io.IOException;

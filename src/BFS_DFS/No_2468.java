@@ -1,4 +1,4 @@
-package Breadth_First_Search;
+package BFS_DFS;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,23 +11,23 @@ public class No_2468 {
     private static int[][] map;
     private static boolean[][] visited;
     private static Queue<Coordinate> noSubmerged;
-    private static int[] searchWidth = {1, 0, -1, 0};
-    private static int[] searchHeight = {0, -1, 0, 1};
+    private static int[] widthSearch = {1, 0, -1, 0};
+    private static int[] heightSearch = {0, 1, 0, -1};
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        final int N = Integer.parseInt(bufferedReader.readLine());
+        final int n = Integer.parseInt(bufferedReader.readLine());
 
-        map = new int[N][N];
+        map = new int[n][n];
         noSubmerged = new LinkedList<>();
 
         int maxWaterHeight = Integer.MIN_VALUE;
         int minWaterHeight = Integer.MAX_VALUE;
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < n; i++) {
             final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-            for (int j = 0; j < N; j++) {
+            for (int j = 0; j < n; j++) {
                 map[i][j] = Integer.parseInt(stringTokenizer.nextToken());
 
                 maxWaterHeight = Math.max(maxWaterHeight, map[i][j]);
@@ -35,7 +35,7 @@ public class No_2468 {
             }
         }
 
-        int safetyAreaCount = solve(N, maxWaterHeight, minWaterHeight);
+        int safetyAreaCount = solve(maxWaterHeight, minWaterHeight, n);
 
         if (maxWaterHeight == minWaterHeight) {
             safetyAreaCount = 1;
@@ -44,48 +44,48 @@ public class No_2468 {
         System.out.println(safetyAreaCount);
     }
 
-    private static int solve(final int N, final int maxWaterHeight, final int minWaterHeight) {
-        int maxSafetyArea = Integer.MIN_VALUE;
+    private static int solve(final int maxWaterHeight, final int minWaterHeight, final int n) {
+        int maxSafetyAreaCount = 0;
 
         for (int h = minWaterHeight; h <= maxWaterHeight; h++) {
-            visited = new boolean[N][N];
+            visited = new boolean[n][n];
             int count = 0;
 
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
                     if (map[i][j] > h && !visited[i][j]) {
-                        visited[i][j] = true;
                         count++;
+                        visited[i][j] = true;
                         noSubmerged.add(new Coordinate(i, j));
 
-                        bfs(h, N);
+                        bfs(h, n);
                     }
                 }
             }
 
-            maxSafetyArea = Math.max(maxSafetyArea, count);
+            maxSafetyAreaCount = Math.max(count, maxSafetyAreaCount);
         }
-        return maxSafetyArea;
+
+        return maxSafetyAreaCount;
     }
 
-    private static void bfs(final int h, final int N) {
+    private static void bfs(final int h, final int n) {
         while (!noSubmerged.isEmpty()) {
             Coordinate coordinate = noSubmerged.poll();
 
-            for (int k = 0; k < searchHeight.length; k++) {
-                int x = coordinate.x + searchWidth[k];
-                int y = coordinate.y + searchHeight[k];
+            for (int k = 0; k < widthSearch.length; k++) {
+                int x = coordinate.x + widthSearch[k];
+                int y = coordinate.y + heightSearch[k];
 
-                if (x < N && y < N && x >= 0 && y >= 0) {
+                if (x >= 0 && y >= 0 && x < n && y < n) {
                     if (map[x][y] > h && !visited[x][y]) {
                         visited[x][y] = true;
                         noSubmerged.add(new Coordinate(x, y));
                     }
                 }
-
             }
-        }
 
+        }
     }
 
     static class Coordinate {

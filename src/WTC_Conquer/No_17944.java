@@ -5,13 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+// 퐁당퐁당1
 public class No_17944 {
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        int N = Integer.parseInt(stringTokenizer.nextToken());
-        int T = Integer.parseInt(stringTokenizer.nextToken());
+        final int N = Integer.parseInt(stringTokenizer.nextToken());
+        final int T = Integer.parseInt(stringTokenizer.nextToken());
 
         solve(N, T);
     }
@@ -22,9 +23,10 @@ public class No_17944 {
         boolean upDownCheck = false;
 
         while (count != t) {
+
             if (index == 2 * n) {
                 upDownCheck = true;
-            }else if (index == 1) {
+            } else if (index == 1) {
                 upDownCheck = false;
             }
 
@@ -33,6 +35,7 @@ public class No_17944 {
             } else {
                 index++;
             }
+
             count++;
         }
 

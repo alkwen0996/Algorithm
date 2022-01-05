@@ -1,4 +1,4 @@
-package Breadth_First_Search;
+package BFS_DFS;
 
 import java.io.BufferedReader;
 import java.io.IOException;

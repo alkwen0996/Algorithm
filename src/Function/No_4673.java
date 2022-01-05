@@ -15,7 +15,7 @@ public class No_4673 {
         }
 
         for (int i = 1; i < LIST_SIZE; i++) {
-            int selfNumber = findSelfNumber(i);
+            int selfNumber = findNotSelfNumber(i);
             if(selfNumber < LIST_SIZE){
                 numberList.set(selfNumber, true);
             }
@@ -24,14 +24,14 @@ public class No_4673 {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 1; i < numberList.size(); i++){
             if(!numberList.get(i)){
-                stringBuilder.append(i+"\n");
+                stringBuilder.append(i).append("\n");
             }
         }
         System.out.println(stringBuilder);
 
     }
 
-    private static int findSelfNumber(int i) {
+    private static int findNotSelfNumber(int i) {
         int n = i;
         char[] numberCharactersArray = String.valueOf(i).toCharArray();
 
