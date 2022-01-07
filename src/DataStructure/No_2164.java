@@ -1,3 +1,5 @@
+package DataStructure;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,15 +22,11 @@ public class No_2164 {
     }
 
     private static int solve(final Deque<Integer> numbers) {
-        int lastCardNumber = 0;
-
         while (numbers.size() > 1) {
             numbers.pop();
             numbers.add(numbers.pop());
         }
 
-        lastCardNumber = numbers.pop();
-
-        return lastCardNumber;
+        return numbers.pop();
     }
 }
