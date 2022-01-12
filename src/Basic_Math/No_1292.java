@@ -24,7 +24,7 @@ public class No_1292 {
         int number = 1;
         int count = 1;
 
-        for (int i = 0; i < progression.length; i++) {
+        for (int i = 1; i < progression.length; i++) {
             progression[i] = number;
 
             if (number == count) {
@@ -36,10 +36,8 @@ public class No_1292 {
         }
 
         int sum = 0;
-        for (int i = 0; i < progression.length; i++) {
-            if (i + 1 >= a && i + 1 <= b) {
-                sum += progression[i];
-            }
+        for (int i = a; i <= b; i++) {
+            sum += progression[i];
         }
 
         return sum;
