@@ -3,7 +3,6 @@ package Stack;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.Stack;
 
 public class No_1874 {
@@ -16,57 +15,34 @@ public class No_1874 {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         final int n = Integer.parseInt(bufferedReader.readLine());
 
-        final int[] inputNumberOrder = new int[n];
-        final int[] resultOrder = new int[n];
+        int start = 0;
+        final Stack<Integer> stack = new Stack<>();
+        final StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < n; i++) {
-            int inputNUmber = Integer.parseInt(bufferedReader.readLine());
+            final int inputNumber = Integer.parseInt(bufferedReader.readLine());
+            System.out.println("inputNumber: " + inputNumber);
 
-            inputNumberOrder[i] = inputNUmber;
-            resultOrder[i] = inputNUmber;
-        }
-
-        String resultSequence = solve(inputNumberOrder, resultOrder);
-        System.out.println(resultSequence);
-    }
-
-    private static String solve(final int[] inputNumbers, final int[] resultOrder) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        final Stack<Integer> sequence = new Stack<>();
-
-        Arrays.sort(inputNumbers);
-        int index = 0;
-
-        for (final int inputNumber : inputNumbers) {
-            sequence.add(inputNumber);
-            stringBuilder.append(PLUS).append(NEW_LINE);
-
-            int count = 0;
-            int size = sequence.size();
-
-            while (!sequence.isEmpty() && sequence.contains(resultOrder[index])) {
-                int popNumber = sequence.pop();
-
-                if (popNumber == resultOrder[index]) {
-                    stringBuilder.append(MINUS).append(NEW_LINE);
-                    index++;
-                } else {
-                    sequence.add(popNumber);
+            if (inputNumber > start) {
+                for (int j = start + 1; j <= inputNumber; j++) {
+                    stack.push(j);
+                    stringBuilder.append(PLUS).append(NEW_LINE);
                 }
 
-                if (count > size) {
-                    break;
-                }
-
-                count++;
+                start = inputNumber;
+            } else if (stack.peek() != inputNumber) {
+                stringBuilder.append(NO);
+                break;
             }
 
+            int popNumber = stack.pop();
+            stringBuilder.append(MINUS).append(NEW_LINE);
         }
 
-        if (sequence.size() > 0) {
-            return NO;
+        if (stringBuilder.toString().contains(NO)) {
+            System.out.println(NO);
+        } else {
+            System.out.println(stringBuilder);
         }
-
-        return stringBuilder.toString();
     }
 }
