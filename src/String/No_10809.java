@@ -5,14 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class No_10809 {
-    public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String input = bufferedReader.readLine();
+    private static final String SPACE = " ";
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char c = 'a'; c <= 'z'; c++){
-            stringBuilder.append(input.indexOf(c)).append(" ");
+    public static void main(String[] args) throws IOException {
+        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        final String word = bufferedReader.readLine();
+
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        for (char i = 'a'; i <= 'z'; i++) {
+            stringBuilder.append(word.indexOf(i)).append(SPACE);
         }
-            System.out.print(stringBuilder.toString());
+
+        System.out.println(stringBuilder);
     }
 }
