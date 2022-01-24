@@ -3,6 +3,7 @@ package Stack;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class No_9093 {
@@ -14,6 +15,7 @@ public class No_9093 {
         final int testCase = Integer.parseInt(bufferedReader.readLine());
 
         final StringBuilder stringBuilder = new StringBuilder();
+        final Stack<Object> objects = new Stack<>();
 
         for (int i = 0; i < testCase; i++) {
             final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
