@@ -5,18 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class No_17103 {
-    static final int arrSize = 1000000;
+    static final int primeNumberSize = 1_000_000;
     private static final String NEW_LINE = "\n";
 
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        boolean[] primeNumbers = new boolean[arrSize + 1];
+        boolean[] primeNumbers = new boolean[primeNumberSize + 1];
 
         primeNumbers[0] = primeNumbers[1] = true;
 
-        for (int i = 2; i * i <= arrSize; i++) {
+        for (int i = 2; i * i <= primeNumberSize; i++) {
             if (!primeNumbers[i]) {
-                for (int j = i + i; j <= arrSize; j += i) {
+                for (int j = i + i; j <= primeNumberSize; j += i) {
                     primeNumbers[j] = true;
                 }
             }
