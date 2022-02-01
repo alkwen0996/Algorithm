@@ -17,37 +17,19 @@ public class No_11653 {
     }
 
     private static String solve(final int n) {
-        final boolean[] primeNumbers = findPrimeNumber(n);
         final StringBuilder stringBuilder = new StringBuilder();
-
         int factorizationResult = n;
+        int factorizationNumber = 2;
 
-        for (int i = 0; i < primeNumbers.length; i++) {
-            while(!primeNumbers[i] && (factorizationResult % i == 0)){
-                factorizationResult = factorizationResult / i;
-                stringBuilder.append(i).append(NEW_LINE);
+        while (factorizationResult != 1) {
+            if (factorizationResult % factorizationNumber == 0) {
+                factorizationResult /= factorizationNumber;
+                stringBuilder.append(factorizationNumber).append(NEW_LINE);
+            } else {
+                factorizationNumber++;
             }
         }
 
         return stringBuilder.toString();
-    }
-
-    private static boolean[] findPrimeNumber(final int n) {
-        boolean[] primeNumbers = new boolean[n + 1];
-
-        primeNumbers[0] = primeNumbers[1] = true;
-        for (int i = 2; i < primeNumbers.length; i++) {
-            for (int j = i + i; j < primeNumbers.length; j += i) {
-                if (primeNumbers[j]) {
-                    continue;
-                }
-
-                if (!primeNumbers[j]) {
-                    primeNumbers[j] = true;
-                }
-            }
-        }
-
-        return primeNumbers;
     }
 }
