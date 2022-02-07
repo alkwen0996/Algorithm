@@ -2,50 +2,42 @@ package Programmers.Queue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Prg_42586 {
     public static void main(String[] args) {
-        int[] progresses = {93, 30, 55};
-        int[] speeds = {1, 30, 5};
+        int[] progresses = {95, 90, 99, 99, 80, 99};
+        int[] speeds = {1, 1, 1, 1, 1, 1};
 
         int[] result = solve(progresses, speeds);
         System.out.println(Arrays.toString(result));
     }
 
     private static int[] solve(final int[] progresses, final int[] speeds) {
-        int[] completeFunction = new int[progresses.length];
-        int answerIndex = 0;
+        final Queue<Integer> queue = new LinkedList<>();
 
         for (int i = 0; i < progresses.length; i++) {
-            int completeCount = 0;
+            int dayCount = 0;
 
             while (progresses[i] < 100) {
                 progresses[i] += speeds[i];
-                completeCount++;
+                dayCount++;
             }
 
-            if (progresses[i] >= 100) {
-                completeFunction[answerIndex] = completeCount;
-                answerIndex++;
-            }
+            queue.add(dayCount);
         }
 
         final List<Integer> answer = new ArrayList<>();
 
-        for (int i = 0; i < completeFunction.length; i++) {
+        while (!queue.isEmpty()) {
+            int dayCount = queue.poll();
             int distributionCount = 1;
-            if (completeFunction[i] < 0) {
-                continue;
-            }
 
-            for (int j = i + 1; j < completeFunction.length; j++) {
-                if (completeFunction[i] >= completeFunction[j]) {
-                    completeFunction[j] = -1;
-                    distributionCount++;
-                } else {
-                    break;
-                }
+            while (!queue.isEmpty() && dayCount >= queue.peek()) {
+                distributionCount++;
+                queue.poll();
             }
 
             answer.add(distributionCount);
