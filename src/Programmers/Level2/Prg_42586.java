@@ -1,4 +1,4 @@
-package Programmers.Queue;
+package Programmers.Level2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
