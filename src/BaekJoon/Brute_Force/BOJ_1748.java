@@ -7,27 +7,25 @@ import java.io.InputStreamReader;
 public class BOJ_1748 {
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        final String n = bufferedReader.readLine();
+        final int N = Integer.parseInt(bufferedReader.readLine());
 
-        int result = solution(n);
+        int result = solution(N);
         System.out.println(result);
     }
 
-    private static int solution(final String n) {
-        int totalNumberLength = 0;
-        int maxNumber = Integer.parseInt(n);
-        int eachNumberLength = 1;
+    private static int solution(final int n) {
+        int length = 0;
+        int increase = 1;
         int unit = 10;
 
-        for (int i = 1; i <= maxNumber; i++) {
+        for (int i = 1; i <= n; i++) {
             if (i % unit == 0) {
-                eachNumberLength++;
                 unit *= 10;
+                increase++;
             }
-
-            totalNumberLength += eachNumberLength;
+            length += increase;
         }
 
-        return totalNumberLength;
+        return length;
     }
 }
