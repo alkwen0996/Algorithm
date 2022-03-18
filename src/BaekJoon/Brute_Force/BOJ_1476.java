@@ -10,40 +10,21 @@ public class BOJ_1476 {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        final int e = Integer.parseInt(stringTokenizer.nextToken());
-        final int s = Integer.parseInt(stringTokenizer.nextToken());
-        final int m = Integer.parseInt(stringTokenizer.nextToken());
+        final int e = Integer.parseInt(stringTokenizer.nextToken()) - 1;
+        final int s = Integer.parseInt(stringTokenizer.nextToken()) - 1;
+        final int m = Integer.parseInt(stringTokenizer.nextToken()) - 1;
 
         int result = solution(e, s, m);
         System.out.println(result);
     }
 
     private static int solution(final int e, final int s, final int m) {
-        int year = 1;
+        int year = 0;
 
-        int countE = 1;
-        int countS = 1;
-        int countM = 1;
-
-        while (countE != e || countS != s || countM != m) {
-            if (countE == 15) {
-                countE = 0;
-            }
-
-            if (countS == 28) {
-                countS = 0;
-            }
-
-            if (countM == 19) {
-                countM = 0;
-            }
-
-            countE++;
-            countS++;
-            countM++;
+        while (year % 15 != e || year % 28 != s || year % 19 != m) {
             year++;
         }
 
-        return year;
+        return year + 1;
     }
 }
