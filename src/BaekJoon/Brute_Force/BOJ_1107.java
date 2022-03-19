@@ -6,54 +6,50 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class BOJ_1107 {
-    private static final int TOTAL_BUTTON_COUNT = 10;
+    private static final int NOW_CHANNEL = 100;
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        final int targetChannel = Integer.parseInt(bufferedReader.readLine());
-        final int brokenButtonCount = Integer.parseInt(bufferedReader.readLine());
 
-        boolean[] isBrokenButtons = new boolean[TOTAL_BUTTON_COUNT];
+        final String targetChannel = bufferedReader.readLine();
+        final int brokenButtonNumberCount = Integer.parseInt(bufferedReader.readLine());
 
-        if (brokenButtonCount > 0) {
+        final boolean[] brokenNumbers = new boolean[10];
+
+        if (brokenButtonNumberCount > 0) {
             final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-            for (int i = 0; i < brokenButtonCount; i++) {
-                int buttonNumber = Integer.parseInt(stringTokenizer.nextToken());
-                isBrokenButtons[buttonNumber] = true;
+            for (int i = 0; i < brokenButtonNumberCount; i++) {
+                int brokenNumber = Integer.parseInt(stringTokenizer.nextToken());
+                brokenNumbers[brokenNumber] = true;
             }
         }
 
-        int result = solution(targetChannel, isBrokenButtons);
+        int result = solution(targetChannel, brokenNumbers, brokenButtonNumberCount);
         System.out.println(result);
-
     }
 
-    private static int solution(final int targetChannel, boolean[] isBrokenButtons) {
-        int pushButtonCount = Math.abs(targetChannel - 100);
+    private static int solution(final String targetChannel, final boolean[] brokenNumbers, final int brokenButtonNumberCount) {
+        int answer = Math.abs(Integer.parseInt(targetChannel) - 100);
 
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i <= 1_000_000; i++) {
             String number = String.valueOf(i);
+            int moveChannelLength = String.valueOf(i).length();
 
-            if (isBreak(isBrokenButtons, number)) {
-                int minimum = Math.abs(targetChannel - i) + number.length();
-                pushButtonCount = Math.min(pushButtonCount, minimum);
+            boolean isCheck = true;
+            for (int j = 0; j < moveChannelLength; j++) {
+                if (brokenNumbers[number.charAt(j) - '0']) {
+                    isCheck = false;
+                    break;
+                }
+            }
+
+            if (isCheck) {
+                int pushButtonCount = Math.abs(Integer.parseInt(targetChannel) - i) + moveChannelLength;
+                answer = Math.min(answer, pushButtonCount);
             }
         }
 
-        return pushButtonCount;
-    }
-
-    private static boolean isBreak(final boolean[] isBrokenButtons, final String number) {
-        boolean isBreak = true;
-
-        for (int j = 0; j < number.length(); j++) {
-            if (isBrokenButtons[number.charAt(j) - '0']) {
-                isBreak = false;
-                break;
-            }
-        }
-
-        return isBreak;
+        return answer;
     }
 }
