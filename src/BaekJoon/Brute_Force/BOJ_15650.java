@@ -7,7 +7,6 @@ import java.util.StringTokenizer;
 
 public class BOJ_15650 {
     static final StringBuilder stringBuilder = new StringBuilder();
-    static boolean[] useNumber = new boolean[10];
     static int[] sequence = new int[10];
 
     private static final String SPACE = " ";
@@ -20,15 +19,15 @@ public class BOJ_15650 {
         final int n = Integer.parseInt(stringTokenizer.nextToken());
         final int m = Integer.parseInt(stringTokenizer.nextToken());
 
-        int index = 0;
-        int start = 1;
+        int index = 1;
+        int selected = 0;
 
-        findSequence(index, start, n, m);
-        System.out.println(stringBuilder.toString());
+        findSequence(index, selected, n, m);
+        System.out.println(stringBuilder);
     }
 
-    private static void findSequence(final int index, final int start, final int n, final int m) {
-        if (index == m) {
+    private static void findSequence(final int index, final int selected, final int n, final int m) {
+        if (selected == m) {
             for (int i = 0; i < m; i++) {
                 stringBuilder.append(sequence[i]);
 
@@ -38,19 +37,18 @@ public class BOJ_15650 {
             }
 
             stringBuilder.append(NEW_LINE);
+            return;
         }
 
-        for (int i = start; i <= n; i++) { // start는 i+1을 의미하기 때문에 항상 수열이 다음 자리는 start부터 시작.
-            if (useNumber[i]) {
-                continue;
-            }
-
-            useNumber[i] = true;
-            sequence[index] = i;
-
-            findSequence(index + 1, i + 1, n, m); // 수열의 다음 index 숫자는 기존에 들어간 i보다 커야한다. (수열이 오름차순이 되어야 한다.)
-            useNumber[i] = false;
+        if (index > n) {
+            return;
         }
+
+        sequence[selected] = index;
+        findSequence(index + 1, selected + 1, n, m);
+
+        sequence[selected] = 0;
+        findSequence(index + 1, selected, n, m);
+
     }
-
 }
