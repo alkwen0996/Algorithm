@@ -32,45 +32,42 @@ public class BOJ_18290 {
 
         int sum = 0;
         int count = 0;
-        int prevRow = 0; // 오름차순 개념사용
+        int prev = -1; // 오름차순 개념사용
 
-        selectGrid(prevRow, count, sum);
+        selectGrid(prev, count, sum);
         System.out.println(max);
     }
 
-    private static void selectGrid(final int prevRow, final int count, final int sum) {
+    private static void selectGrid(final int prev, final int count, final int sum) {
         if (count == k) {
             max = Math.max(max, sum);
             return;
         }
 
-        for (int i = prevRow; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (visited[i][j]) {
-                    continue;
-                }
+        for (int i = prev + 1; i < n * m; i++) {
+            int x = i / m;
+            int y = i % m;
 
-                boolean isCheck = true;
+            boolean isCheck = true;
 
-                for (int a = 0; a < width.length; a++) {
-                    int positionX = i + width[a];
-                    int positionY = j + height[a];
+            for (int a = 0; a < width.length; a++) {
+                int positionX = x + width[a];
+                int positionY = y + height[a];
 
-                    if (positionX >= 0 && positionX < n && positionY >= 0 && positionY < m) {
-                        if (visited[positionX][positionY]) {
-                            isCheck = false;
-                        }
+                if (positionX >= 0 && positionX < n && positionY >= 0 && positionY < m) {
+                    if (visited[positionX][positionY]) {
+                        isCheck = false;
                     }
                 }
+            }
 
-                if (isCheck) {
-                    visited[i][j] = true;
-                    selectGrid(i, count + 1, sum + boards[i][j]);
-                    visited[i][j] = false;
-                }
+            if (isCheck) {
+                visited[x][y] = true;
+                selectGrid(x * m + y, count + 1, sum + boards[x][y]);
+                visited[x][y] = false;
             }
         }
-
     }
 
 }
+
