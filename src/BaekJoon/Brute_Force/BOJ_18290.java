@@ -32,19 +32,19 @@ public class BOJ_18290 {
 
         int sum = 0;
         int count = 0;
+        int prevRow = 0; // 오름차순 개념사용
 
-        selectGrid(count, sum);
-
+        selectGrid(prevRow, count, sum);
         System.out.println(max);
     }
 
-    private static void selectGrid(final int count, final int sum) {
+    private static void selectGrid(final int prevRow, final int count, final int sum) {
         if (count == k) {
             max = Math.max(max, sum);
             return;
         }
 
-        for (int i = 0; i < n; i++) {
+        for (int i = prevRow; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (visited[i][j]) {
                     continue;
@@ -65,7 +65,7 @@ public class BOJ_18290 {
 
                 if (isCheck) {
                     visited[i][j] = true;
-                    selectGrid(count + 1, sum + boards[i][j]);
+                    selectGrid(i, count + 1, sum + boards[i][j]);
                     visited[i][j] = false;
                 }
             }
