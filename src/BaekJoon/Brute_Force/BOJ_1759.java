@@ -1,4 +1,4 @@
-package BaekJoon;
+package BaekJoon.Brute_Force;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+public class BOJ_1759 {
     private static final StringBuilder stringBuilder = new StringBuilder();
     private static final String NEW_LINE = "\n";
 
