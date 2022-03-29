@@ -14,25 +14,27 @@ public class BOJ_9095 {
         final StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < testCaseCount; i++) {
-            stringBuilder.append(solution(bufferedReader.readLine())).append(NEW_LINE);
+            int sum = 0;
+            stringBuilder.append(solution(sum, Integer.parseInt(bufferedReader.readLine()))).append(NEW_LINE);
         }
 
         System.out.println(stringBuilder);
     }
 
-    private static int solution(final String readLine) {
-        final int testCase = Integer.parseInt(readLine);
-
-        int[] combinationCount = new int[12];
-
-        combinationCount[1] = 1;
-        combinationCount[2] = 2;
-        combinationCount[3] = 4;
-
-        for (int i = 4; i < combinationCount.length; i++) {
-            combinationCount[i] = combinationCount[i - 1] + combinationCount[i - 2] + combinationCount[i - 3];
+    private static int solution(int sum, final int readLine) {
+        if (sum > readLine) {
+            return 0;
         }
 
-        return combinationCount[testCase];
+        if (sum == readLine) {
+            return 1;
+        }
+
+        int now = 0;
+        for (int i = 1; i <= 3; i++) {
+            now += solution(sum + i, readLine);
+        }
+
+        return now;
     }
 }
