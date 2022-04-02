@@ -3,19 +3,20 @@ package BaekJoon.Brute_Force;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class BOJ_15661 {
     private static int[][] abilityBoard;
     private static int numberOfPeople;
+    private static boolean[] visited;
+    private static int minimumAbilityGap = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         numberOfPeople = Integer.parseInt(bufferedReader.readLine());
 
         abilityBoard = new int[numberOfPeople][numberOfPeople];
+        visited = new boolean[numberOfPeople];
 
         for (int i = 0; i < numberOfPeople; i++) {
             final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
@@ -25,68 +26,38 @@ public class BOJ_15661 {
             }
         }
 
-        final List<Integer> startTeam = new ArrayList<>();
-        final List<Integer> linkTeam = new ArrayList<>();
-
         int index = 0;
-        System.out.println(findMinimumAbilityGap(index, startTeam, linkTeam));
+        findMinimumAbilityGap(index);
+
+        System.out.println(minimumAbilityGap);
     }
 
-    private static int findMinimumAbilityGap(final int index, final List<Integer> startTeam, final List<Integer> linkTeam) {
+    private static void findMinimumAbilityGap(final int index) {
         if (index == numberOfPeople) {
-            if (startTeam.size() == 0) {
-                return -1;
-            }
-
-            if (linkTeam.size() == 0) {
-                return -1;
-            }
-
             int startTeamAbility = 0, linkTeamAbility = 0;
 
-            for (int i = 0; i < startTeam.size(); i++) {
-                for (int j = 0; j < startTeam.size(); j++) {
-                    if (i == j) {
+            for (int i = 0; i < numberOfPeople; i++) {
+                for (int j = i + 1; j < numberOfPeople; j++) {
+                    if (visited[i] != visited[j]) {
                         continue;
                     }
 
-                    startTeamAbility += abilityBoard[startTeam.get(i)][startTeam.get(j)];
-                }
-            }
-
-            for (int i = 0; i < linkTeam.size(); i++) {
-                for (int j = 0; j < linkTeam.size(); j++) {
-                    if (i == j) {
-                        continue;
+                    if (visited[i]) {
+                        startTeamAbility += abilityBoard[i][j] + abilityBoard[j][i];
+                    } else {
+                        linkTeamAbility += abilityBoard[i][j] + abilityBoard[j][i];
                     }
-
-                    linkTeamAbility += abilityBoard[linkTeam.get(i)][linkTeam.get(j)];
                 }
             }
 
-            return Math.abs(startTeamAbility - linkTeamAbility);
+            minimumAbilityGap = Math.min(minimumAbilityGap, Math.abs(startTeamAbility - linkTeamAbility));
+
+            return;
         }
 
-        int minimumAbilityGap = -1;
-
-        startTeam.add(index);
-        int startAbility = findMinimumAbilityGap(index + 1, startTeam, linkTeam);
-
-        if (minimumAbilityGap == -1 || (startAbility != -1 && minimumAbilityGap > startAbility)) {
-            minimumAbilityGap = startAbility;
-        }
-
-        startTeam.remove(startTeam.size() - 1);
-
-        linkTeam.add(index);
-        int linkAbility = findMinimumAbilityGap(index + 1, startTeam, linkTeam);
-
-        if (minimumAbilityGap == -1 || (linkAbility != -1 && minimumAbilityGap > linkAbility)) {
-            minimumAbilityGap = linkAbility;
-        }
-
-        linkTeam.remove(linkTeam.size() - 1);
-
-        return minimumAbilityGap;
+        visited[index] = true;
+        findMinimumAbilityGap(index + 1);
+        visited[index] = false;
+        findMinimumAbilityGap(index + 1);
     }
 }
