@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class BOJ_10866 {
-
     private static final String NEW_LINE = "\n";
     private static final String BACK = "back";
     private static final String FRONT = "front";
