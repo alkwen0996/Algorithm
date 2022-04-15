@@ -6,9 +6,6 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class BOJ_1182 {
-    private static int[] sequence;
-    private static int count = 0;
-
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
@@ -17,34 +14,33 @@ public class BOJ_1182 {
         final int s = Integer.parseInt(stringTokenizer.nextToken());
 
         stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-        sequence = new int[n];
+        int[] sequence = new int[n];
 
         for (int i = 0; i < n; i++) {
             sequence[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        int index = 0;
-        int sum = 0;
-        countingSequence(n, s, index, sum);
-
-        if (s == 0) {
-            System.out.println(count - 1);
-        } else {
-            System.out.println(count);
-        }
+        int sum = countingSequence(n, s, sequence);
+        System.out.println(sum);
     }
 
-    private static void countingSequence(final int n, final int s, final int index, final int sum) {
-        if (index == n) {
-            if (sum == s) {
-                count++;
+    private static int countingSequence(final int n, final int s, final int[] sequence) {
+        int answer = 0;
+
+        for (int i = 1; i < (1 << n); i++) {
+            int sum = 0;
+            for (int j = 0; j < n; j++) {
+                if ((i & (1 << j)) != 0) {
+                    sum += sequence[j];
+                }
             }
 
-            return;
+            if (sum == s) {
+                answer += 1;
+            }
         }
 
-        countingSequence(n, s, index + 1, sum + sequence[index]);
-        countingSequence(n, s, index + 1, sum);
+        return answer;
     }
 
 }
