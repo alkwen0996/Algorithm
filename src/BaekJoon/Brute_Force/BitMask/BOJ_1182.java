@@ -10,37 +10,44 @@ public class BOJ_1182 {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        final int n = Integer.parseInt(stringTokenizer.nextToken());
-        final int s = Integer.parseInt(stringTokenizer.nextToken());
+        final int numberCount = Integer.parseInt(stringTokenizer.nextToken());
+        final int targetValue = Integer.parseInt(stringTokenizer.nextToken());
 
         stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-        int[] sequence = new int[n];
 
-        for (int i = 0; i < n; i++) {
-            sequence[i] = Integer.parseInt(stringTokenizer.nextToken());
+        final int[] numbers = new int[numberCount];
+
+        for (int i = 0; i < numberCount; i++) {
+            numbers[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        int sum = countingSequence(n, s, sequence);
-        System.out.println(sum);
+        int count = findSumOfPermutation(numbers, targetValue);
+
+        if (targetValue == 0) {
+            System.out.println(count - 1);
+        } else {
+            System.out.println(count);
+        }
     }
 
-    private static int countingSequence(final int n, final int s, final int[] sequence) {
-        int answer = 0;
+    private static int findSumOfPermutation(final int[] numbers, final int targetValue) {
+        int count = 0;
 
-        for (int i = 1; i < (1 << n); i++) {
+        for (int i = 0; i < (1 << numbers.length); i++) {
             int sum = 0;
-            for (int j = 0; j < n; j++) {
-                if ((i & (1 << j)) != 0) {
-                    sum += sequence[j];
+
+            for (int j = 0; j < numbers.length; j++) {
+                if((i & (1<<j)) != 0){
+                    sum += numbers[j];
                 }
             }
 
-            if (sum == s) {
-                answer += 1;
+            if(sum == targetValue){
+                count++;
             }
         }
 
-        return answer;
+        return count;
     }
 
 }
