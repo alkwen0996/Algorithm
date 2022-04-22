@@ -1,4 +1,4 @@
-package BaekJoon.Brute_Force.BitMask;
+package BaekJoon.Brute_Force.bitMask;
 
 import java.io.BufferedReader;
 import java.io.IOException;

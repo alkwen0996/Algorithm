@@ -1,4 +1,4 @@
-package BaekJoon.Back_Tracking;
+package BaekJoon.Brute_Force.backTracking;
 
 import java.io.BufferedReader;
 import java.io.IOException;

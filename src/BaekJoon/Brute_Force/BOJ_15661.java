@@ -38,13 +38,11 @@ public class BOJ_15661 {
 
             for (int i = 0; i < numberOfPeople; i++) {
                 for (int j = i + 1; j < numberOfPeople; j++) {
-                    if (visited[i] != visited[j]) {
-                        continue;
+                    if (visited[i] && visited[j]) {
+                        startTeamAbility += abilityBoard[i][j] + abilityBoard[j][i];
                     }
 
-                    if (visited[i]) {
-                        startTeamAbility += abilityBoard[i][j] + abilityBoard[j][i];
-                    } else {
+                    if(!visited[i] && !visited[j]) {
                         linkTeamAbility += abilityBoard[i][j] + abilityBoard[j][i];
                     }
                 }

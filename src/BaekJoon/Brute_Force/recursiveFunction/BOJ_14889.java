@@ -1,4 +1,4 @@
-package BaekJoon.Brute_Force;
+package BaekJoon.Brute_Force.recursiveFunction;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,12 +13,13 @@ public class BOJ_14889 {
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        numberOfPeople = Integer.parseInt(bufferedReader.readLine());
 
+        numberOfPeople = Integer.parseInt(bufferedReader.readLine());
         abilityBoard = new int[numberOfPeople][numberOfPeople];
 
         for (int i = 0; i < numberOfPeople; i++) {
             final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
             for (int j = 0; j < numberOfPeople; j++) {
                 abilityBoard[i][j] = Integer.parseInt(stringTokenizer.nextToken());
             }
@@ -62,13 +63,8 @@ public class BOJ_14889 {
             return -1;
         }
 
-        int answer = -1;
         teamStart.add(index);
-        int startTeamAbility = teamBuilding(index + 1, teamStart, teamLink);
-
-        if (answer == -1 || startTeamAbility != -1 && answer > startTeamAbility) {
-            answer = startTeamAbility;
-        }
+        int answer = teamBuilding(index + 1, teamStart, teamLink);
         teamStart.remove(teamStart.size() - 1);
 
         teamLink.add(index);
@@ -77,6 +73,7 @@ public class BOJ_14889 {
         if (answer == -1 || (linkTeamAbility != -1 && answer > linkTeamAbility)) {
             answer = linkTeamAbility;
         }
+
         teamLink.remove(teamLink.size() - 1);
 
         return answer;

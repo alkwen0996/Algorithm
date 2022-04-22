@@ -34,11 +34,11 @@ public class BOJ_15655 {
         Collections.sort(sequenceNumbers);
         int index = 0;
 
-        findSequence(index, n, m, sequenceNumbers);
+        findSequence(index, m, sequenceNumbers);
         System.out.println(stringBuilder);
     }
 
-    private static void findSequence(final int index, final int n, final int m, final List<Integer> sequenceNumbers) {
+    private static void findSequence(final int index, final int m, final List<Integer> sequenceNumbers) {
         if (index == m) {
             for (int i = 0; i < m; i++) {
                 stringBuilder.append(sequences[i]);
@@ -65,7 +65,7 @@ public class BOJ_15655 {
 
             useNumbers[sequenceNumbers.get(i)] = true;
             sequences[index] = sequenceNumbers.get(i);
-            findSequence(index + 1, n, m, sequenceNumbers);
+            findSequence(index + 1, m, sequenceNumbers);
             useNumbers[sequenceNumbers.get(i)] = false;
         }
     }
