@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class BOJ_14889 {
-    private static int numberOfPeople;
     private static int[][] abilityBoard;
+    private static int minimumDifference = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        final int numberOfPeople = Integer.parseInt(bufferedReader.readLine());
 
-        numberOfPeople = Integer.parseInt(bufferedReader.readLine());
         abilityBoard = new int[numberOfPeople][numberOfPeople];
 
         for (int i = 0; i < numberOfPeople; i++) {
@@ -26,57 +26,49 @@ public class BOJ_14889 {
         }
 
         int index = 0;
-        List<Integer> teamStart = new ArrayList<>();
-        List<Integer> teamLink = new ArrayList<>();
+        final List<Integer> startTeam = new ArrayList<>();
+        final List<Integer> linkTeam = new ArrayList<>();
 
-        System.out.println(teamBuilding(index, teamStart, teamLink));
+        findMinimumAbilityDifference(startTeam, linkTeam, index);
+        System.out.println(minimumDifference);
     }
 
-    private static int teamBuilding(int index, List<Integer> teamStart, List<Integer> teamLink) {
-        if (index == numberOfPeople) {
-            if (teamStart.size() != numberOfPeople / 2) {
-                return -1;
-            }
-
-            if (teamLink.size() != numberOfPeople / 2) {
-                return -1;
+    private static void findMinimumAbilityDifference(final List<Integer> startTeam, final List<Integer> linkTeam, final int index) {
+        if (index == abilityBoard.length) {
+            if (startTeam.size() != abilityBoard.length / 2 || linkTeam.size() != abilityBoard.length / 2) {
+                return;
             }
 
             int startTeamAbility = 0;
             int linkTeamAbility = 0;
 
-            for (int i = 0; i < numberOfPeople / 2; i++) {
-                for (int j = 0; j < numberOfPeople / 2; j++) {
+            for (int i = 0; i < abilityBoard.length / 2; i++) {
+                for (int j = 0; j < abilityBoard.length / 2; j++) {
                     if (i == j) {
                         continue;
                     }
 
-                    startTeamAbility += abilityBoard[teamStart.get(i)][teamStart.get(j)];
-                    linkTeamAbility += abilityBoard[teamLink.get(i)][teamLink.get(j)];
+                    startTeamAbility += abilityBoard[startTeam.get(i)][startTeam.get(j)];
+                    linkTeamAbility += abilityBoard[linkTeam.get(i)][linkTeam.get(j)];
                 }
             }
 
-            return Math.abs(startTeamAbility - linkTeamAbility);
+            minimumDifference = Math.min(minimumDifference, Math.abs(startTeamAbility - linkTeamAbility));
+            return;
         }
 
-        if (teamStart.size() > numberOfPeople / 2 || teamLink.size() > numberOfPeople) {
-            return -1;
+        if (startTeam.size() > abilityBoard.length / 2 || linkTeam.size() > abilityBoard.length / 2) {
+            return;
         }
 
-        teamStart.add(index);
-        int answer = teamBuilding(index + 1, teamStart, teamLink);
-        teamStart.remove(teamStart.size() - 1);
+        startTeam.add(index);
+        findMinimumAbilityDifference(startTeam, linkTeam, index + 1);
+        startTeam.remove(startTeam.size() - 1);
 
-        teamLink.add(index);
-        int linkTeamAbility = teamBuilding(index + 1, teamStart, teamLink);
+        linkTeam.add(index);
+        findMinimumAbilityDifference(startTeam, linkTeam, index+1);
+        linkTeam.remove(linkTeam.size() - 1);
 
-        if (answer == -1 || (linkTeamAbility != -1 && answer > linkTeamAbility)) {
-            answer = linkTeamAbility;
-        }
-
-        teamLink.remove(teamLink.size() - 1);
-
-        return answer;
     }
 
 }
