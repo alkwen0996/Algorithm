@@ -5,38 +5,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class BOJ_1463 {
-    private static int result = 100_000;
-
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(bufferedReader.readLine());
 
-        int count = 0;
-        createOne(n, count);
+        int result = createOne(n);
 
         System.out.println(result);
     }
 
-    private static void createOne(int n, int count) {
-        if (n == 1) {
-            result = Math.min(count, result);
+    private static int createOne(int n) {
+        int[] dp = new int[n + 1];
 
-            return;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + 1;
+
+            if (i % 2 == 0) {
+                dp[i] = Math.min(dp[i], dp[i / 2] + 1);
+            }
+
+            if (i % 3 == 0) {
+                dp[i] = Math.min(dp[i], dp[i / 3] + 1);
+            }
         }
 
-        if (count >= result) {
-            return;
-        }
-
-        if (n % 3 == 0) {
-            createOne(n / 3, count + 1);
-        }
-
-        if (n % 2 == 0) {
-            createOne(n / 2, count + 1);
-        }
-
-        createOne(n - 1, count + 1);
+        return dp[n];
     }
 
 }
