@@ -15,22 +15,19 @@ public class BOJ_11727 {
         memorization[1] = 1;
         memorization[2] = 3;
 
-        int index = 3;
-        findWayToFillRectangle(n, index);
-        System.out.println(memorization[n]);
+        System.out.println(findWayToFillRectangle(n));
     }
 
-    private static void findWayToFillRectangle(final int n, final int index) {
+    private static int findWayToFillRectangle(final int n) {
         if (n <= 2) {
-            return;
+            return memorization[n];
         }
 
-        if (index > n) {
-            return;
+        for (int i = 3; i <= n; i++) {
+            memorization[i] = (memorization[i - 1] + (2 * memorization[i - 2])) % 10_007;
         }
 
-        memorization[index] = (memorization[index - 1] + (2 * memorization[index - 2])) % 10_007;
-        findWayToFillRectangle(n, index + 1);
+        return memorization[n];
     }
 
 }
