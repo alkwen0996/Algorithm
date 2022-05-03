@@ -6,16 +6,14 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class BOJ_11052 {
-    private static int[] memorization;
-    private static int[] cardPacksCount;
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
         final int purchaseCardCount = Integer.parseInt(bufferedReader.readLine());
 
-        cardPacksCount = new int[purchaseCardCount + 1];
-        memorization = new int[10_001];
+        int[] cardPacksCount = new int[purchaseCardCount + 1];
+        int[] memorization = new int[purchaseCardCount + 1];
 
         final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
@@ -23,21 +21,17 @@ public class BOJ_11052 {
             cardPacksCount[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        System.out.println(calculateMoney(purchaseCardCount));
+        System.out.println(calculateMoney(cardPacksCount, memorization, purchaseCardCount));
     }
 
-    private static int calculateMoney(int cardPackCount) {
-        if(memorization[cardPackCount] > 0){
-            return memorization[cardPackCount];
+    private static int calculateMoney(final int[] cardPacksCount, final int[] memorization, final int purchaseCardCount) {
+        for (int i = 1; i <= purchaseCardCount; i++) {
+            for (int j = 1; j <= i; j++) {
+                memorization[i] = Math.max(memorization[i], memorization[i - j] + cardPacksCount[j]);
+            }
         }
 
-        for (int i = 1; i <= cardPackCount; i++) {
-            memorization[cardPackCount] = Math.max(memorization[cardPackCount],
-                    calculateMoney(cardPackCount - i) + cardPacksCount[i]
-            );
-        }
-
-        return memorization[cardPackCount];
+        return memorization[purchaseCardCount];
     }
 
 }
