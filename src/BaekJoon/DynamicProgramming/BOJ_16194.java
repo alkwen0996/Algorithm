@@ -6,39 +6,31 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class BOJ_16194 {
-    private static int[] eachCardPacksCardNumbers;
-    private static int[] memorization;
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         final int cardNumberToPurchase = Integer.parseInt(bufferedReader.readLine());
 
         final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-        eachCardPacksCardNumbers = new int[cardNumberToPurchase + 1];
-        memorization = new int[cardNumberToPurchase + 1];
+        int[] eachCardPacksCardNumbers = new int[cardNumberToPurchase + 1];
+        int[] memorization = new int[cardNumberToPurchase + 1];
 
         for (int i = 1; i <= cardNumberToPurchase; i++) {
             eachCardPacksCardNumbers[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        memorization[1] = eachCardPacksCardNumbers[1];
-        System.out.println(calculateToPurchaseCardCost(cardNumberToPurchase));
+        System.out.println(calculateToPurchaseCardCost(eachCardPacksCardNumbers, memorization, cardNumberToPurchase));
     }
 
-    private static int calculateToPurchaseCardCost(int cardNumberToPurchase) {
-        if (memorization[cardNumberToPurchase] > 0) {
-            return memorization[cardNumberToPurchase];
-        }
-
+    private static int calculateToPurchaseCardCost(final int[] eachCardPacksCardNumbers, final int[] memorization, int cardNumberToPurchase) {
         for (int i = 1; i <= cardNumberToPurchase; i++) {
-            if (memorization[cardNumberToPurchase] == 0) {
-                memorization[cardNumberToPurchase] = calculateToPurchaseCardCost(cardNumberToPurchase - i) + eachCardPacksCardNumbers[i];
-            }
+            for (int j = 1; j <= i; j++) {
+                if (memorization[i] == 0) {
+                    memorization[i] = memorization[i - j] + eachCardPacksCardNumbers[j];
+                    continue;
+                }
 
-            if (memorization[cardNumberToPurchase] != 0) {
-                memorization[cardNumberToPurchase] = Math.min(memorization[cardNumberToPurchase],
-                        calculateToPurchaseCardCost(cardNumberToPurchase - i) + eachCardPacksCardNumbers[i]
-                );
+                memorization[i] = Math.min(memorization[i], memorization[i - j] + eachCardPacksCardNumbers[j]);
             }
         }
 
