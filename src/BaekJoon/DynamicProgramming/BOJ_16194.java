@@ -15,6 +15,10 @@ public class BOJ_16194 {
         int[] eachCardPacksCardNumbers = new int[cardNumberToPurchase + 1];
         int[] memorization = new int[cardNumberToPurchase + 1];
 
+        for (int i = 1; i < memorization.length; i++) {
+            memorization[i] = -1;
+        }
+
         for (int i = 1; i <= cardNumberToPurchase; i++) {
             eachCardPacksCardNumbers[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
@@ -25,7 +29,7 @@ public class BOJ_16194 {
     private static int calculateToPurchaseCardCost(final int[] eachCardPacksCardNumbers, final int[] memorization, int cardNumberToPurchase) {
         for (int i = 1; i <= cardNumberToPurchase; i++) {
             for (int j = 1; j <= i; j++) {
-                if (memorization[i] == 0) {
+                if (memorization[i] == -1) {
                     memorization[i] = memorization[i - j] + eachCardPacksCardNumbers[j];
                     continue;
                 }
