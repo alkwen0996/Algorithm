@@ -7,7 +7,6 @@ import java.util.StringTokenizer;
 
 public class BOJ_14002 {
 
-    private static final int NUMBER_MAXIMUM_RANGE = 1001;
     private static final String NEW_LINE = "\n";
     private static final String SPACE = " ";
 
@@ -16,7 +15,7 @@ public class BOJ_14002 {
         final int sequenceSize = Integer.parseInt(bufferedReader.readLine());
 
         int[] totalSequence = new int[sequenceSize + 1];
-        final int[] memorization = new int[NUMBER_MAXIMUM_RANGE];
+        final int[] sequenceSizeMemorization = new int[sequenceSize + 1];
 
         final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
@@ -24,10 +23,10 @@ public class BOJ_14002 {
             totalSequence[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        System.out.println(createIncreasingPartialSequence(sequenceSize, totalSequence, memorization));
+        System.out.println(createIncreasingPartialSequence(sequenceSize, totalSequence, sequenceSizeMemorization));
     }
 
-    private static StringBuilder createIncreasingPartialSequence(final int sequenceSize, final int[] totalSequence, final int[] memorization) {
+    private static StringBuilder createIncreasingPartialSequence(final int sequenceSize, final int[] totalSequence, final int[] sequenceSizeMemorization) {
         final StringBuilder stringBuilder = new StringBuilder();
 
         if (sequenceSize == 1) {
@@ -39,29 +38,36 @@ public class BOJ_14002 {
         }
 
         int increasingSequenceSize = 0;
-        memorization[1] = 1;
+        sequenceSizeMemorization[1] = 1;
 
         for (int i = 2; i < totalSequence.length; i++) {
-            memorization[i] = 1;
+            sequenceSizeMemorization[i] = 1;
 
             for (int j = 1; j < i; j++) {
-                if (totalSequence[i] > totalSequence[j]) {
-                    memorization[i] = Math.max(memorization[i], memorization[j] + 1);
+                if (totalSequence[i] > totalSequence[j] && sequenceSizeMemorization[i] < sequenceSizeMemorization[j] + 1) {
+                    sequenceSizeMemorization[i] = Math.max(sequenceSizeMemorization[i], sequenceSizeMemorization[j] + 1);
                 }
             }
 
-            increasingSequenceSize = Math.max(increasingSequenceSize, memorization[i]);
+            increasingSequenceSize = Math.max(increasingSequenceSize, sequenceSizeMemorization[i]);
+        }
+
+        int[] indexMemorization = new int[increasingSequenceSize];
+        int index = 0;
+        int value = increasingSequenceSize;
+
+        for (int i = sequenceSize; i >= 1; i--) {
+            if (value == sequenceSizeMemorization[i]) {
+                indexMemorization[index] = totalSequence[i];
+                value--;
+                index++;
+            }
         }
 
         stringBuilder.append(increasingSequenceSize).append(NEW_LINE);
 
-        int index = 1;
-
-        for (int i = 1; i < memorization.length; i++) {
-            if (index == memorization[i]) {
-                stringBuilder.append(totalSequence[i]).append(SPACE);
-                index++;
-            }
+        for (int i = increasingSequenceSize - 1; i >= 0; i--) {
+            stringBuilder.append(indexMemorization[i]).append(SPACE);
         }
 
         return stringBuilder;
