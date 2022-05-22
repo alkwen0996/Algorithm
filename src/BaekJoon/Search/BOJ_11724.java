@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BOJ_11724 {
@@ -40,28 +42,36 @@ public class BOJ_11724 {
                 continue;
             }
 
-            dfs(i, connectedComponents, checkVertex);
+            bfs(i, connectedComponents, checkVertex);
             connectedComponentCount++;
         }
+
         System.out.println(connectedComponentCount);
     }
 
-    private static void dfs(final int startIndex, final List<List<Integer>> connectedComponents, final boolean[] checkVertex) {
+    private static void bfs(final int startIndex, final List<List<Integer>> connectedComponents, final boolean[] checkVertex) {
+        final Queue<Integer> queue = new LinkedList<>();
+        queue.add(startIndex);
+
         if (checkVertex[startIndex]) {
-            return;
+            return ;
         }
 
-        checkVertex[startIndex] = true;
+        while (!queue.isEmpty()) {
+            final int vertexNumber = queue.poll();
 
-        for (int i = 0; i < connectedComponents.get(startIndex).size(); i++) {
-            int nextStartIndex = connectedComponents.get(startIndex).get(i);
+            for (int i = 0; i < connectedComponents.get(vertexNumber).size(); i++) {
+                final int nextConnection = connectedComponents.get(vertexNumber).get(i);
 
-            if(checkVertex[nextStartIndex]){
-                continue;
+                if (checkVertex[nextConnection]) {
+                    continue;
+                }
+
+                checkVertex[nextConnection] = true;
+                queue.add(nextConnection);
             }
-
-            dfs(nextStartIndex, connectedComponents, checkVertex);
         }
+
     }
 
 }
