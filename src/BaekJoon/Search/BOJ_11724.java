@@ -38,7 +38,7 @@ public class BOJ_11724 {
         }
 
         for (int i = 1; i < connectedComponents.size(); i++) {
-            if(checkVertex[i]){
+            if (checkVertex[i]) {
                 continue;
             }
 
@@ -54,7 +54,7 @@ public class BOJ_11724 {
         queue.add(startIndex);
 
         if (checkVertex[startIndex]) {
-            return ;
+            return;
         }
 
         while (!queue.isEmpty()) {
