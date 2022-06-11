@@ -58,7 +58,7 @@ public class No_2178 {
             }
         }
 
-        return map[N-1][M-1];
+        return map[N - 1][M - 1];
     }
 
     static class Node {
