@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class BOJ_11726 {
+    private static final int MOD = 10_007;
     private static int[] memorization;
 
     public static void main(String[] args) throws IOException {
@@ -24,7 +25,7 @@ public class BOJ_11726 {
         }
 
         for (int i = 3; i <= n; i++) {
-            memorization[i] = (memorization[i - 1] + memorization[i - 2]) % 10_007;
+            memorization[i] = (memorization[i - 1] + memorization[i - 2]) % MOD;
         }
 
         return memorization[n];
