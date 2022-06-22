@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class No_1003 {
+public class BOJ_1003 {
     private static Integer[][] dp = new Integer[41][2];
 
     private static final String SPACE = " ";
