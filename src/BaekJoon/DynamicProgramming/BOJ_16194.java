@@ -31,6 +31,7 @@ public class BOJ_16194 {
             for (int j = 1; j <= i; j++) {
                 if (memorization[i] == -1) {
                     memorization[i] = memorization[i - j] + eachCardPacksCardNumbers[j];
+
                     continue;
                 }
 
