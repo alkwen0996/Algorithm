@@ -2,7 +2,7 @@ package Programmers.Level1;
 
 import java.util.Arrays;
 
-public class No_12954 {
+public class Prg_12954 {
     public static void main(String[] args) {
         int x = 10000000;
         int n = 1000;
