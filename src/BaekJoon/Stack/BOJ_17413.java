@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class No_17413 {
+public class BOJ_17413 {
     private static final char LEFT_ARROW = '<';
     private static final char RIGHT_ARROW = '>';
     private static final char SPACE = ' ';
