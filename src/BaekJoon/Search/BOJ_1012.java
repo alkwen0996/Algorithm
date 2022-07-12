@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class No_1012 {
+public class BOJ_1012 {
     private static int width;
     private static int height;
     private static int areaCount;
