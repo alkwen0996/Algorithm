@@ -31,7 +31,6 @@ public class BOJ_1021 {
         }
 
         System.out.println(solve(numbers, orderOfExtraction));
-        ;
     }
 
     private static int solve(final Queue<Integer> numbers, final List<Integer> orderOfExtraction) {
