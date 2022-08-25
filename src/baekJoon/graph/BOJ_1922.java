@@ -1,6 +1,7 @@
 package baekJoon.graph;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.StringTokenizer;
 
 public class BOJ_1922 {
     public static void main(String[] args) throws IOException {
+        System.setIn(new FileInputStream("input.txt"));
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         final int numberOfComputer = Integer.parseInt(bufferedReader.readLine());
         final int numberOfLine = Integer.parseInt(bufferedReader.readLine());
@@ -41,12 +43,9 @@ public class BOJ_1922 {
     private static int calculateMinimumCost(final int numberOfComputer, final List<List<Computer>> connections) {
         final Queue<Computer> computers = new PriorityQueue<>(Comparator.comparingInt(computer -> computer.connectCost));
 
-        final int[] minimumEdge = new int[numberOfComputer + 1];
         final boolean[] visited = new boolean[numberOfComputer + 1];
-
-        Arrays.fill(minimumEdge, Integer.MAX_VALUE);
-        minimumEdge[1] = 0;
-        computers.offer(new Computer(1, minimumEdge[1]));
+        computers.addAll(connections.get(1));
+        visited[1] = true;
 
         int totalCost = 0;
         int count = 0;
@@ -66,16 +65,7 @@ public class BOJ_1922 {
                 break;
             }
 
-            for (int i = 0; i < connections.get(connection.computer).size(); i++) {
-                final Computer checkConnection = connections.get(connection.computer).get(i);
-
-                if (visited[checkConnection.computer] || minimumEdge[checkConnection.computer] <= checkConnection.connectCost) {
-                    continue;
-                }
-
-                minimumEdge[checkConnection.computer] = checkConnection.connectCost;
-                computers.offer(new Computer(checkConnection.computer, minimumEdge[checkConnection.computer]));
-            }
+            computers.addAll(connections.get(connection.computer));
         }
 
         return totalCost;
