@@ -16,10 +16,10 @@ public class Main {
         final int numberOfHouse = Integer.parseInt(bufferedReader.readLine());
         final int numberOfColor = 3;
 
-        prices = new int[numberOfHouse][numberOfColor];
-        memorization = new int[numberOfHouse][numberOfColor];
+        prices = new int[numberOfHouse + 1][numberOfColor];
+        memorization = new int[numberOfHouse + 1][numberOfColor];
 
-        for (int i = 0; i < numberOfHouse; i++) {
+        for (int i = 1; i <= numberOfHouse; i++) {
             final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
             prices[i][0] = Integer.parseInt(stringTokenizer.nextToken());
@@ -27,19 +27,43 @@ public class Main {
             prices[i][2] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        System.out.println(calculateMinimumPaintPrice(numberOfHouse));
-    }
+        memorization[1][RED] = prices[1][RED];
+        memorization[1][GREEN] = prices[1][GREEN];
+        memorization[1][BLUE] = prices[1][BLUE];
 
-    private static int calculateMinimumPaintPrice(final int numberOfHouse) {
-        for (int i = 1; i < numberOfHouse; i++) {
-            prices[i][RED] += Math.min(prices[i - 1][GREEN], prices[i - 1][BLUE]);
-            prices[i][GREEN] += Math.min(prices[i - 1][RED], prices[i - 1][BLUE]);
-            prices[i][BLUE] += Math.min(prices[i - 1][GREEN], prices[i - 1][RED]);
-        }
+        calculatePrice_byRecursive(numberOfHouse, RED);
+        calculatePrice_byRecursive(numberOfHouse, GREEN);
+        calculatePrice_byRecursive(numberOfHouse, BLUE);
 
-        return Arrays.stream(prices[numberOfHouse-1])
+        final int minimumPrice = Arrays.stream(memorization[numberOfHouse])
                 .min()
                 .getAsInt();
+
+        System.out.println(minimumPrice);
     }
 
+    private static int calculatePrice_byRecursive(final int numberOfHouse, final int color) { // 반복문 사용
+        if (memorization[numberOfHouse][color] == 0) {
+            if (color == RED) {
+                memorization[numberOfHouse][RED]
+                        = Math.min(calculatePrice_byRecursive(numberOfHouse - 1, GREEN), calculatePrice_byRecursive(numberOfHouse - 1, BLUE))
+                +prices[numberOfHouse][RED];
+            }
+
+            if (color == GREEN) {
+                memorization[numberOfHouse][GREEN]
+                        = Math.min(calculatePrice_byRecursive(numberOfHouse - 1, RED), calculatePrice_byRecursive(numberOfHouse - 1, BLUE))
+                        +prices[numberOfHouse][GREEN];
+            }
+
+            if (color == BLUE) {
+                memorization[numberOfHouse][BLUE]
+                        = Math.min(calculatePrice_byRecursive(numberOfHouse - 1, GREEN), calculatePrice_byRecursive(numberOfHouse - 1, RED))
+                        +prices[numberOfHouse][BLUE];
+            }
+
+        }
+
+        return memorization[numberOfHouse][color];
+    }
 }
