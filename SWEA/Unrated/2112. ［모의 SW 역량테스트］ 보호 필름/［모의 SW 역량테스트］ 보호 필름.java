@@ -1,15 +1,19 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+
 public class Solution {
 
-    private static int minimumInput, passCondition;
-    private static int[][] film, copyMap;
+    private static int minimumCount, passCondition;
+    private static int[][] film, copyFilm;
+    private static int[] chemicalA, chemicalB;
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -20,80 +24,84 @@ public class Solution {
         for (int i = 1; i <= testCaseCount; i++) {
             StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-            final int filmThickness = Integer.parseInt(stringTokenizer.nextToken()); // 필름두께
-            final int width = Integer.parseInt(stringTokenizer.nextToken()); // 필름 너비 사이즈
-            passCondition = Integer.parseInt(stringTokenizer.nextToken()); // 통과 기준
+            final int depth = Integer.parseInt(stringTokenizer.nextToken());
+            final int width = Integer.parseInt(stringTokenizer.nextToken());
+            passCondition = Integer.parseInt(stringTokenizer.nextToken());
 
-            film = new int[filmThickness][width];
-            copyMap = new int[filmThickness][width];
+            film = new int[depth][width];
+            copyFilm = new int[depth][width];
 
-            for (int j = 0; j < filmThickness; j++) {
+            for (int j = 0; j < depth; j++) {
                 stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
                 for (int k = 0; k < width; k++) {
                     film[j][k] = Integer.parseInt(stringTokenizer.nextToken());
-                    copyMap[j][k] = film[j][k];
+                    copyFilm[j][k] = film[j][k];
                 }
             }
 
-            minimumInput = Integer.MAX_VALUE; // 최소약품 투입횟수를 저장할 변수.
-            final boolean[] isSelected = new boolean[film.length];
-
-            if (isPass()) { // 합격기준 조건검사
-                minimumInput = 0; // 조건에 합격시 0출력
-            } else {
-                countMinimumInput(isSelected, 0); // 조건에 불합격시 최소약품투입횟수를 계산한다.
+            if (isPass()) {
+                stringBuilder.append("#").append(i).append(" ").append(0).append("\n");
+                continue;
             }
 
-            stringBuilder.append("#").append(i).append(" ").append(minimumInput).append("\n");
+            minimumCount = Integer.MAX_VALUE;
+
+            chemicalA = new int[film[0].length];
+            chemicalB = new int[film[0].length];
+
+            Arrays.fill(chemicalA, 0);
+            Arrays.fill(chemicalB, 1);
+
+            selectLines(new boolean[film.length], 0);
+            stringBuilder.append("#").append(i).append(" ").append(minimumCount).append("\n");
         }
 
-        System.out.println(stringBuilder); // 결과출력
+        System.out.println(stringBuilder);
     }
 
-    private static void countMinimumInput(final boolean[] isSelected, final int count) {
-        if (count == film.length) {
+    private static void selectLines(final boolean[] isSelected, final int depth) {
+        if (depth == film.length) {
             inputChemical(isSelected, 0, 0);
             revertMap();
 
             return;
         }
 
-        isSelected[count] = true;
-        countMinimumInput(isSelected, count + 1);
-
-        isSelected[count] = false;
-        countMinimumInput(isSelected, count + 1);
+        isSelected[depth] = true;
+        selectLines(isSelected, depth + 1);
+        isSelected[depth] = false;
+        selectLines(isSelected, depth + 1);
     }
 
-    private static void inputChemical(final boolean[] isSelected, final int count, final int depth) {
-        if (count >= minimumInput) {
+    private static void revertMap() {
+        for (int i = 0; i < copyFilm.length; i++) {
+            film[i] = copyFilm[i].clone();
+        }
+
+    }
+
+    private static void inputChemical(final boolean[] isSelected, final int depth, final int count) {
+        if (count >= minimumCount) {
             return;
         }
 
         if (depth == film.length) {
             if (isPass()) {
-                minimumInput = count;
+                minimumCount = count;
             }
 
             return;
         }
 
         if (isSelected[depth]) {
-            Arrays.fill(film[depth], 0);
-            inputChemical(isSelected, count + 1, depth + 1);
+            film[depth] = chemicalA;
+            inputChemical(isSelected, depth + 1, count + 1);
 
-            Arrays.fill(film[depth], 1);
-            inputChemical(isSelected, count + 1, depth + 1);
+            film[depth] = chemicalB;
+            inputChemical(isSelected, depth + 1, count + 1);
         } else {
-            inputChemical(isSelected, count, depth + 1);
-        }
-
-    }
-
-    private static void revertMap() {
-        for (int i = 0; i < film.length; i++) {
-            film[i] = copyMap[i].clone();
+            inputChemical(isSelected, depth + 1, count);
         }
 
     }
@@ -101,19 +109,19 @@ public class Solution {
     private static boolean isPass() {
         for (int i = 0; i < film[0].length; i++) {
             int sameCount = 1;
-            int beforeCell = film[0][i];
+            int prevCell = film[0][i];
 
             for (int j = 1; j < film.length; j++) {
-                if (sameCount >= passCondition) {
+                if (sameCount == passCondition) {
                     break;
                 }
 
-                if (beforeCell == film[j][i]) {
+                if (prevCell == film[j][i]) {
                     sameCount++;
                     continue;
                 }
 
-                beforeCell = film[j][i];
+                prevCell = film[j][i];
                 sameCount = 1;
             }
 
