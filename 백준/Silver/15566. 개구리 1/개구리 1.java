@@ -4,12 +4,13 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static final String SPACE = " ";
-    public static final String NEW_LINE = "\n";
-    private static int[][] flog, like, tree;
-    private static int[] sel;
-    private static boolean[] visited;
+    public static final String NO = "NO", YES = "YES", NEW_LINE = "\n", SPACE = " ";
+    private static int[][] flogTopics, likeFlowers, relations;
+    private static int[] selectFlogs;
+    private static boolean[] isSelected;
     private static int N, M;
+    private static StringBuilder stringBuilder;
+    private static boolean checkResult;
 
     public static void main(String[] args) throws IOException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -18,26 +19,26 @@ public class Main {
         N = Integer.parseInt(stringTokenizer.nextToken());
         M = Integer.parseInt(stringTokenizer.nextToken());
 
-        flog = new int[N][4];
-        like = new int[N][2];
-        tree = new int[M][3];
+        flogTopics = new int[N][4];
+        likeFlowers = new int[N][2];
+        relations = new int[M][3];
 
         for (int i = 0; i < N; i++) {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
             for (int j = 0; j < 4; j++) {
-                flog[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+                flogTopics[i][j] = Integer.parseInt(stringTokenizer.nextToken());
             }
         }
 
         for (int i = 0; i < N; i++) {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-            like[i][0] = Integer.parseInt(stringTokenizer.nextToken()) - 1;
-            like[i][1] = Integer.parseInt(stringTokenizer.nextToken()) - 1;
+            likeFlowers[i][0] = Integer.parseInt(stringTokenizer.nextToken()) - 1;
+            likeFlowers[i][1] = Integer.parseInt(stringTokenizer.nextToken()) - 1;
 
-            if (like[i][0] == like[i][1]) {
-                like[i][1] = -1;
+            if (likeFlowers[i][0] == likeFlowers[i][1]) {
+                likeFlowers[i][1] = -1;
             }
         }
 
@@ -45,74 +46,68 @@ public class Main {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
             for (int j = 0; j < 3; j++) {
-                tree[i][j] = Integer.parseInt(stringTokenizer.nextToken()) - 1;
+                relations[i][j] = Integer.parseInt(stringTokenizer.nextToken()) - 1;
             }
         }
 
-        sel = new int[N];
-        visited = new boolean[N];
+        selectFlogs = new int[N];
+        isSelected = new boolean[N];
+        stringBuilder = new StringBuilder();
         dfs(0);
 
-//        if (answer.equals(NO)) {
-        System.out.println("NO");
-//        } else {
-//            final StringBuilder stringBuilder = new StringBuilder();
-//
-//            for (final int flog : flogs) {
-//                stringBuilder.append(flog).append(SPACE);
-//            }
-//
-//            System.out.println(answer + NEW_LINE + stringBuilder);
-//        }
-
+        if (checkResult) {
+            System.out.println(stringBuilder);
+        } else {
+            System.out.println(NO);
+        }
     }
 
     private static void dfs(final int depth) {
-        if (sel.length == depth) {
+        if (depth > selectFlogs.length) {
+            return;
+        }
+
+        if (selectFlogs.length == depth) {
             if (isAllCheck()) {
-                String answer = "YES";
+                checkResult = true;
+                stringBuilder.append(YES).append(NEW_LINE);
 
-                final StringBuilder stringBuilder = new StringBuilder();
-
-                for (final int flog : sel) {
+                for (final int flog : selectFlogs) {
                     stringBuilder.append(flog + 1).append(SPACE);
                 }
-
-                System.out.println(answer + NEW_LINE + stringBuilder);
-                System.exit(0);
             }
 
             return;
         }
 
         for (int j = 0; j < 2; j++) {
-            if (like[depth][j] == -1) {
+            if (likeFlowers[depth][j] == -1) {
                 continue;
             }
 
-            int index = like[depth][j];
+            int index = likeFlowers[depth][j];
 
-            if (visited[index]) {
+            if (isSelected[index]) {
                 continue;
             }
 
-            visited[index] = true;
-            sel[index] = depth;
+            isSelected[index] = true;
+            selectFlogs[index] = depth;
             dfs(depth + 1);
-            visited[index] = false;
+            isSelected[index] = false;
         }
     }
 
     private static boolean isAllCheck() {
-        for (final int[] relation : tree) {
+        for (final int[] relation : relations) {
             final int flowerA = relation[0];
             final int flowerB = relation[1];
             final int topic = relation[2];
 
-            final int flogA = sel[flowerA];
-            final int flogB = sel[flowerB];
+            final int flogA = selectFlogs[flowerA];
+            final int flogB = selectFlogs[flowerB];
 
-            if (flog[flogA][topic] != flog[flogB][topic]) {
+            if (flogTopics[flogA][topic] != flogTopics[flogB][topic]) {
                 return false;
             }
         }
