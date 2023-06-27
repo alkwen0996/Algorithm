@@ -1,10 +1,11 @@
-import java.awt.Point;
+import java.awt.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -18,60 +19,34 @@ public class Main {
 
         final int height = Integer.parseInt(stringTokenizer.nextToken());
         final int width = Integer.parseInt(stringTokenizer.nextToken());
-        final int[][] array = new int[height][width];
+        final int[][] array = new int[height + 1][width + 1];
+        final int[][] sum = new int[height + 1][width + 1];
 
-        for (int i = 0; i < height; i++) {
+        for (int i = 1; i <= height; i++) {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-            for (int j = 0; j < width; j++) {
+            for (int j = 1; j <= width; j++) {
                 array[i][j] = Integer.parseInt(stringTokenizer.nextToken());
+                sum[i][j] = array[i][j] + sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1];
             }
         }
 
-        final List<Range> rangeList = new ArrayList<>();
         final int lineCount = Integer.parseInt(bufferedReader.readLine());
+        final StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < lineCount; i++) {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-            rangeList.add(new Range(
-                    new Point(Integer.parseInt(stringTokenizer.nextToken()), Integer.parseInt(stringTokenizer.nextToken())),
-                    new Point(Integer.parseInt(stringTokenizer.nextToken()), Integer.parseInt(stringTokenizer.nextToken()))
-            ));
-        }
 
-        calculateSum(array, rangeList);
-    }
+            final int x1 = Integer.parseInt(stringTokenizer.nextToken());
+            final int y1 = Integer.parseInt(stringTokenizer.nextToken());
+            final int x2 = Integer.parseInt(stringTokenizer.nextToken());
+            final int y2 = Integer.parseInt(stringTokenizer.nextToken());
 
-    private static void calculateSum(final int[][] array, final List<Range> rangeList) {
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        for (final Range range : rangeList) {
-            final Point startPoint = range.startPoint;
-            final Point endPoint = range.endPoint;
-
-            int sum = 0;
-
-            for (int j = startPoint.x; j <= endPoint.x; j++) {
-                for (int k = startPoint.y; k <= endPoint.y; k++) {
-                    sum += array[j-1][k-1];
-                }
-            }
-
-            stringBuilder.append(sum).append(NEW_LINE);
+            stringBuilder.append(sum[x2][y2] - sum[x1 - 1][y2] - sum[x2][y1 - 1] + sum[x1 - 1][y1 - 1]).append(NEW_LINE);
         }
 
         System.out.println(stringBuilder);
-    }
-
-    static class Range{
-        private Point startPoint;
-        private Point endPoint;
-
-        public Range(final Point startPoint, final Point endPoint) {
-            this.startPoint = startPoint;
-            this.endPoint = endPoint;
-        }
     }
 
 }
