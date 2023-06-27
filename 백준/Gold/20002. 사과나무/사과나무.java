@@ -33,11 +33,9 @@ public class Main {
 
         int maxRevenue = Integer.MIN_VALUE;
 
-        for (int i = 1; i <= length; i++) {
-            for (int j = 1; j <= length; j++) {
-                int range = Math.min(length - i, length - j);
-
-                for (int k = 0; k <= range; k++) {
+        for (int k = 0; k <= length; k++) {
+            for (int i = 1; i <= length - k; i++) {
+                for (int j = 1; j <= length - k; j++) {
                     maxRevenue = Math.max(maxRevenue, sum[i + k][j + k] - sum[i - 1][j + k] - sum[i + k][j - 1] + sum[i - 1][j - 1]);
                 }
             }
