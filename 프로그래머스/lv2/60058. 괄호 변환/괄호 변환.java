@@ -2,76 +2,76 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 class Solution {
-    public static final char OPEN_BRACKET = '(';
-    public static final char CLOSE_BRACKET = ')';
+    public static final char OPEN_PARENTHESIS = '(';
+    public static final char CLOSE_PARENTHESIS = ')';
     public static final String EMPTY_STRING = "";
     
     public static String solution(final String p) {
-        return dfs(p);
+        return changeToCorrectString(p);
     }
 
-    public static String dfs(final String w) {
+    public static String changeToCorrectString(final String w) {
         if (w.length() == 0) {
             return EMPTY_STRING;
         }
 
         StringBuilder u = new StringBuilder();
-        String v = "";
+        StringBuilder v = new StringBuilder();
         int openCount = 0;
         int closeCount = 0;
 
-        for (int i = 0; i < w.length(); i++) {
-            u.append(w.charAt(i));
+        char[] wToCharacters = w.toCharArray();
 
-            if (w.charAt(i) == '(') {
+        for (int i = 0; i < wToCharacters.length; i++) {
+            u.append(wToCharacters[i]);
+
+            if (wToCharacters[i] == OPEN_PARENTHESIS) {
                 openCount++;
             } else {
                 closeCount++;
             }
 
             if (openCount == closeCount) {
-                v = w.substring(i + 1);
+                v.append(w.substring(i + 1));
                 break;
             }
         }
 
         if (isCorrectString(u.toString())) {
-            return u.append(dfs(v)).toString();
+            return u.append(changeToCorrectString(v.toString())).toString();
         }
 
-        StringBuilder temp = new StringBuilder("(");
-        temp.append(dfs(v));
-        temp.append(")");
+        StringBuilder newString = new StringBuilder();
+        newString.append(OPEN_PARENTHESIS);
+        newString.append(changeToCorrectString(v.toString()));
+        newString.append(CLOSE_PARENTHESIS);
 
         u = new StringBuilder(u.substring(1, u.length() - 1));
+        char[] uToCharacters = u.toString().toCharArray();
 
-        for (int i = 0; i < u.length(); i++) {
-            if (u.charAt(i) == '(') {
-                temp.append(")");
+        for (final char uToCharacter : uToCharacters) {
+            if (uToCharacter == OPEN_PARENTHESIS) {
+                newString.append(CLOSE_PARENTHESIS);
                 continue;
             }
 
-            temp.append("(");
+            newString.append(OPEN_PARENTHESIS);
         }
 
-        return temp.toString();
+        return newString.toString();
     }
 
     public static boolean isCorrectString(final String p) {
         Deque<Character> stack = new ArrayDeque<>();
 
         for (final char bracket : p.toCharArray()) {
-            if (bracket == OPEN_BRACKET) {
+            if (bracket == OPEN_PARENTHESIS) {
                 stack.push(bracket);
                 continue;
             }
 
-            if (bracket == CLOSE_BRACKET) {
-                if (stack.isEmpty() || stack.peek() == CLOSE_BRACKET) {
-                    return false;
-                }
-
-                if (stack.peek() == OPEN_BRACKET) {
+            if (bracket == CLOSE_PARENTHESIS) {
+                if (!stack.isEmpty() && stack.peek() == OPEN_PARENTHESIS) {
                     stack.pop();
                 }
             }
