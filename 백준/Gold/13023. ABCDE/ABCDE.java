@@ -1,70 +1,72 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
-
-    private static int result = 0;
+    public static final String NEW_LINE = "\n";
+    public static final String SPACE = " ";
+    public static int isAllFriend, N, M;
 
     public static void main(String[] args) throws IOException {
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        final int numberOfPeople = Integer.parseInt(stringTokenizer.nextToken());
-        final int numberOfFriends = Integer.parseInt(stringTokenizer.nextToken());
+        N = Integer.parseInt(stringTokenizer.nextToken());
+        M = Integer.parseInt(stringTokenizer.nextToken());
 
-        List<List<Integer>> relations = new ArrayList<>();
+        List<List<Integer>> graph = new ArrayList<>();
 
-        for (int i = 0; i < numberOfPeople; i++) {
-            relations.add(new ArrayList<>());
+        for (int i = 0; i < N; i++) {
+            graph.add(new ArrayList<>());
         }
 
-        for (int i = 0; i < numberOfFriends; i++) {
+        for (int i = 0; i < M; i++) {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+            int person1 = Integer.parseInt(stringTokenizer.nextToken());
+            int person2 = Integer.parseInt(stringTokenizer.nextToken());
 
-            final int friend1 = Integer.parseInt(stringTokenizer.nextToken());
-            final int friend2 = Integer.parseInt(stringTokenizer.nextToken());
-
-            relations.get(friend1).add(friend2);
-            relations.get(friend2).add(friend1);
+            graph.get(person1).add(person2);
+            graph.get(person2).add(person1);
         }
 
-        for (int i = 0; i < numberOfPeople; i++) {
-            boolean[] checkRelationship = new boolean[numberOfPeople];
+        isAllFriend = 0;
+        boolean[] isVisited;
 
-            checkRelationship[i] = true;
-            dfs(i, 0, checkRelationship, relations);
-            checkRelationship[i] = false;
+        for (int i = 0; i < N; i++) {
+            isVisited = new boolean[N];
+            isVisited[i] = true;
+            checkFriend(0, i, isVisited, graph);
 
-            if (result == 1) {
+            if (isAllFriend == 1) {
                 break;
             }
         }
 
-        System.out.println(result);
+        System.out.println(isAllFriend);
     }
 
-    private static void dfs(final int index, final int depth, final boolean[] checkRelationship, final List<List<Integer>> relations) {
+    private static void checkFriend(final int depth, final int personNumber, final boolean[] isVisited, final List<List<Integer>> graph) {
         if (depth == 4) {
-            result = 1;
+            isAllFriend = 1;
 
             return;
         }
 
-        for (int i = 0; i < relations.get(index).size(); i++) {
-            int relation = relations.get(index).get(i);
+        for (int i = 0; i < graph.get(personNumber).size(); i++) {
+            Integer person = graph.get(personNumber).get(i);
 
-            if (checkRelationship[relation]) {
+            if (isVisited[person]) {
                 continue;
             }
 
-            checkRelationship[relation] = true;
-            dfs(relation, depth + 1, checkRelationship, relations);
-            checkRelationship[relation] = false;
+            isVisited[person] = true;
+            checkFriend(depth + 1, person, isVisited, graph);
+            isVisited[person] = false;
         }
     }
 
