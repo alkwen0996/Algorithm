@@ -65,10 +65,6 @@ public class Main {
                         continue;
                     }
 
-                    if (chessBoard[nextX][nextY] > chessBoard[point.x][point.y]) {
-                        continue;
-                    }
-
                     queue.add(new Point(nextX, nextY));
                     isVisited[nextX][nextY] = true;
                     chessBoard[nextX][nextY] = chessBoard[point.x][point.y] + 1;
