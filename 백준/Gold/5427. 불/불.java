@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Deque;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -21,7 +21,7 @@ public class Main {
         String line;
         Point man = null;
         int height, width;
-        Deque<Point> firePoints;
+        Queue<Point> firePoints;
 
         for (int i = 0; i < testCase; i++) {
             stringTokenizer = new StringTokenizer(bufferedReader.readLine());
@@ -30,7 +30,7 @@ public class Main {
             width = Integer.parseInt(stringTokenizer.nextToken());
             map = new char[width][height];
 
-            firePoints = new ArrayDeque<>();
+            firePoints = new LinkedList<>();
 
             for (int j = 0; j < width; j++) {
                 line = bufferedReader.readLine();
@@ -54,7 +54,7 @@ public class Main {
         System.out.println(stringBuilder);
     }
 
-    private static String findRoute(final char[][] map, final Point man, final Deque<Point> firePoints) {
+    private static String findRoute(final char[][] map, final Point man, final Queue<Point> firePoints) {
         final int[] dx = {1, 0, -1, 0};
         final int[] dy = {0, 1, 0, -1};
 
