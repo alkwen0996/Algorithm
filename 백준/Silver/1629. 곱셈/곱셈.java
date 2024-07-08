@@ -8,26 +8,24 @@ public class Main {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        int a = Integer.parseInt(stringTokenizer.nextToken());
-        int b = Integer.parseInt(stringTokenizer.nextToken());
-        int c = Integer.parseInt(stringTokenizer.nextToken());
+        long a = Integer.parseInt(stringTokenizer.nextToken());
+        long b = Integer.parseInt(stringTokenizer.nextToken());
+        long c = Integer.parseInt(stringTokenizer.nextToken());
 
-        System.out.println(pow(a, b, c));
-    }
+        System.out.println(calculate(a, b, c));
+    } // main
 
-    private static long pow(final int a, int b, final int c) {
+    private static long calculate(long a, long b, long c) {
         if (b == 1) {
             return a % c;
         }
 
-        long result = pow(a, b / 2, c);
-        result = result * result % c;
+        long result = calculate(a, b / 2, c);
 
-        if(b % 2 == 0){
-            return result;
+        if (b % 2 == 1) {
+            return result * result % c * a % c;
         }
 
-        return result * a % c;
+        return result * result % c;
     }
-
-}
+} // class
