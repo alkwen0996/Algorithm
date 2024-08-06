@@ -5,33 +5,35 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    private static final StringBuilder stringBuilder = new StringBuilder();
+
+    static StringBuilder stringBuilder = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        final int n = Integer.parseInt(stringTokenizer.nextToken());
-        final int m = Integer.parseInt(stringTokenizer.nextToken());
-
-        final int[] input = new int[n];
-        final int[] permutation = new int[m];
+        int n = Integer.parseInt(stringTokenizer.nextToken());
+        int m = Integer.parseInt(stringTokenizer.nextToken());
 
         stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
+        int[] numbers = new int[n];
+        int[] permutation = new int[m];
+
         for (int i = 0; i < n; i++) {
-            input[i] = Integer.parseInt(stringTokenizer.nextToken());
+            numbers[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        Arrays.sort(input);
-        generatePermutation(input, permutation, m, 0);
+        Arrays.sort(numbers);
+        createPermutation(numbers, permutation, 0);
         System.out.println(stringBuilder);
     }
 
-    private static void generatePermutation(final int[] input, final int[] permutation, final int m, final int count) {
-        if (count == m) {
-            for (final int element : permutation) {
-                stringBuilder.append(element).append(" ");
+    private static void createPermutation(final int[] numbers, final int[] permutation, final int step) {
+        if (step == permutation.length) {
+
+            for (int i = 0; i < permutation.length; i++) {
+                stringBuilder.append(permutation[i]).append(" ");
             }
 
             stringBuilder.append("\n");
@@ -40,16 +42,15 @@ public class Main {
         }
 
         int prev = 0;
-        for (int i = 0; i < input.length; i++) {
-            if ((prev & 1 << input[i]) != 0) {
+        for (int i = 0; i < numbers.length; i++) {
+            if (prev == numbers[i]) {
                 continue;
             }
 
-            permutation[count] = input[i];
-            prev = prev | 1 << permutation[count];
-            generatePermutation(input, permutation, m, count + 1);
+            prev = numbers[i];
+            permutation[step] = numbers[i];
+            createPermutation(numbers, permutation, step + 1);
         }
-
     }
 
-}
+} // class
