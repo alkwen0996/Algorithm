@@ -5,61 +5,57 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    private static final StringBuilder stringBuilder = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        final int n = Integer.parseInt(stringTokenizer.nextToken());
-        final int m = Integer.parseInt(stringTokenizer.nextToken());
-
-        final int[] input = new int[n];
-        final int[] permutation = new int[m];
+        int n = Integer.parseInt(stringTokenizer.nextToken());
+        int m = Integer.parseInt(stringTokenizer.nextToken());
 
         stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
+        int[] numbers = new int[n];
+        int[] permutation = new int[m];
+        boolean[] isSelected = new boolean[n];
+
         for (int i = 0; i < n; i++) {
-            input[i] = Integer.parseInt(stringTokenizer.nextToken());
+            numbers[i] = Integer.parseInt(stringTokenizer.nextToken());
         }
 
-        Arrays.sort(input);
-        generatePermutation(input, permutation, m, 0, 0);
-        System.out.println(stringBuilder);
+        Arrays.sort(numbers);
+        createPermutation(numbers, permutation, isSelected, 0, 0);
     }
 
-    private static void generatePermutation(final int[] input, final int[] permutation, final int m, final int count, final int flag) {
-        if (count == m) {
-            for (final int element : permutation) {
-                stringBuilder.append(element).append(" ");
+    private static void createPermutation(final int[] numbers, final int[] permutation, final boolean[] isSelected, final int step, final int start) {
+        if (step == permutation.length) {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < permutation.length; i++) {
+                stringBuilder.append(permutation[i]).append(" ");
             }
 
-            stringBuilder.append("\n");
+            System.out.println(stringBuilder);
 
             return;
         }
 
         int prev = 0;
-        for (int i = 0; i < input.length; i++) {
-            if ((flag & 1 << i) != 0) {
+        for (int i = start; i < numbers.length; i++) {
+            if (isSelected[i]) {
                 continue;
             }
 
-            if ((prev & 1 << input[i]) != 0) {
+            if (prev == numbers[i]) {
                 continue;
             }
 
-            if (count > 0) {
-                if (input[i] < permutation[count - 1]) {
-                    continue;
-                }
-            }
-
-            permutation[count] = input[i];
-            prev = prev | 1 << permutation[count];
-            generatePermutation(input, permutation, m, count + 1, flag | 1 << i);
+            isSelected[i] = true;
+            prev = numbers[i];
+            permutation[step] = numbers[i];
+            createPermutation(numbers, permutation, isSelected, step + 1, i + 1);
+            isSelected[i] = false;
         }
-
     }
 
-}
+} // class
