@@ -1,35 +1,35 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
 
 class Solution {
     boolean solution(String s) {
         boolean answer = false;
 
-        Deque<Character> stack = new ArrayDeque<>();
+        Stack<Character> stack = new Stack<>();
+        Stack<Character> pairStack = new Stack<>();
 
         for (int i = 0; i < s.length(); i++) {
             stack.push(s.charAt(i));
         }
 
-        Deque<Character> checkStack = new ArrayDeque<>();
-
         while (!stack.isEmpty()) {
-            Character firstPop = stack.pop();
+            Character pop = stack.pop();
 
-            if (checkStack.isEmpty() || firstPop == ')') {
-                checkStack.push(firstPop);
+            if (pairStack.isEmpty()) {
+                pairStack.push(pop);
                 continue;
             }
 
-            if (checkStack.peek() == ')' && firstPop == '(') {
-                checkStack.pop();
+            Character peek = pairStack.peek();
+
+            if (peek == ')' && pop == '(') {
+                pairStack.pop();
                 continue;
             }
 
-            checkStack.push(firstPop);
+            pairStack.push(pop);
         }
 
-        if (checkStack.isEmpty()) {
+        if (pairStack.isEmpty()) {
             answer = true;
         }
 
