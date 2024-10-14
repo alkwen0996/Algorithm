@@ -16,11 +16,11 @@ class Solution {
                 if (stack.isEmpty()) {
                     stack.push(board[k][lineNumber]);
                 } else {
-                    if (stack.peek() == board[k][lineNumber]) {
+                    if (stack.peek() != board[k][lineNumber]) {
+                        stack.push(board[k][lineNumber]);
+                    } else {
                         stack.pop();
                         answer += 2;
-                    } else {
-                        stack.push(board[k][lineNumber]);
                     }
                 }
 
