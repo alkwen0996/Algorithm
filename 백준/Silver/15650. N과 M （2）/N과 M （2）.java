@@ -5,6 +5,8 @@ import java.util.StringTokenizer;
 
 public class Main {
 
+    static StringBuilder stringBuilder;
+
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
@@ -12,26 +14,27 @@ public class Main {
         int n = Integer.parseInt(stringTokenizer.nextToken());
         int m = Integer.parseInt(stringTokenizer.nextToken());
 
-        int[] numbers = new int[n];
-        int[] permutations = new int[m];
-        boolean[] isSelected = new boolean[n];
+        int[] numbers = new int[n + 1];
+        boolean[] isSelected = new boolean[n + 1];
+        int[] permutation = new int[m];
 
-        for (int i = 0; i < n; i++) {
-            numbers[i] = i + 1;
+        for (int i = 1; i < numbers.length; i++) {
+            numbers[i] = i;
         }
 
-        permutation(numbers, permutations, isSelected, 0, 0);
+        stringBuilder = new StringBuilder();
+        permutation(numbers, isSelected, permutation, 0, 1);
+
+        System.out.println(stringBuilder);
     }
 
-    private static void permutation(final int[] numbers, final int[] permutations, final boolean[] isSelected, final int count, final int start) {
-        if (count == permutations.length) {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (final int permutation : permutations) {
-                stringBuilder.append(permutation).append(" ");
+    private static void permutation(final int[] numbers, final boolean[] isSelected, final int[] permutation, final int count, final int start) {
+        if (count == permutation.length) {
+            for (int i = 0; i < permutation.length; i++) {
+                stringBuilder.append(permutation[i]).append(" ");
             }
 
-            System.out.println(stringBuilder);
+            stringBuilder.append("\n");
 
             return;
         }
@@ -41,9 +44,9 @@ public class Main {
                 continue;
             }
 
-            permutations[count] = numbers[i];
+            permutation[count] = i;
             isSelected[i] = true;
-            permutation(numbers, permutations, isSelected, count + 1, i + 1);
+            permutation(numbers, isSelected, permutation, count + 1, i);
             isSelected[i] = false;
         }
     }
