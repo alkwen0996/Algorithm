@@ -4,48 +4,51 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    static final StringBuilder stringBuilder = new StringBuilder();
-    static boolean[] useNumber = new boolean[10];
-    static int[] sequence = new int[10];
 
-    private static final String SPACE = " ";
-    private static final String NEW_LINE = "\n";
+    static StringBuilder stringBuilder;
 
     public static void main(String[] args) throws IOException {
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        final StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 
-        final int n = Integer.parseInt(stringTokenizer.nextToken());
-        final int m = Integer.parseInt(stringTokenizer.nextToken());
+        int n = Integer.parseInt(stringTokenizer.nextToken());
+        int m = Integer.parseInt(stringTokenizer.nextToken());
 
-        int index = 0;
+        int[] numbers = new int[n + 1];
+        boolean[] isSelected = new boolean[n + 1];
+        int[] permutation = new int[m];
 
-        findSequence(index, n, m);
-        System.out.println(stringBuilder.toString());
-    }
-
-    private static void findSequence(int index, final int n, final int m) {
-        if (index == m) {
-            for (int i = 0; i < m; i++) {
-                stringBuilder.append(sequence[i]);
-
-                if (i < m - 1) {
-                    stringBuilder.append(SPACE);
-                }
-            }
-
-            stringBuilder.append(NEW_LINE);
+        for (int i = 1; i < numbers.length; i++) {
+            numbers[i] = i;
         }
 
-        for (int i = 1; i <= n; i++) {
-            if (useNumber[i]) {
+        stringBuilder = new StringBuilder();
+        permutation(numbers, isSelected, permutation, 0);
+
+        System.out.println(stringBuilder);
+    }
+
+    private static void permutation(final int[] numbers, final boolean[] isSelected, final int[] permutation, final int count) {
+        if (count == permutation.length) {
+            for (int i = 0; i < permutation.length; i++) {
+                stringBuilder.append(permutation[i]).append(" ");
+            }
+
+            stringBuilder.append("\n");
+
+            return;
+        }
+
+        for (int i = 1; i < numbers.length; i++) {
+            if (isSelected[i]) {
                 continue;
             }
 
-            useNumber[i] = true;
-            sequence[index] = i;
-            findSequence(index + 1, n, m);
-            useNumber[i] = false;
+            permutation[count] = i;
+            isSelected[i] = true;
+            permutation(numbers, isSelected, permutation, count + 1);
+            isSelected[i] = false;
         }
     }
-}
+
+} // class
